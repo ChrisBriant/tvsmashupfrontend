@@ -5,10 +5,11 @@ import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import { Route, BrowserRouter } from 'react-router-dom';
-import Signin from './Signin';
-import Register from './Register';
+import Home from './Home';
+import AddShow from './AddShow';
+import AddSmashUp from './AddSmashUp';
 
-const UnauthNav = () => {
+const AuthNav = () => {
 
   return (
     <BrowserRouter>
@@ -17,8 +18,9 @@ const UnauthNav = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="signin">Signin</Nav.Link>
-            <Nav.Link href="register">Register</Nav.Link>
+            <Nav.Link href="home">Home</Nav.Link>
+            <Nav.Link href="addshow">Add Show</Nav.Link>
+            <Nav.Link href="addsmashup">Add Smash Up</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -34,16 +36,19 @@ const UnauthNav = () => {
         </Navbar.Collapse>
       </Navbar>
       <Route exact path="/">
-          <Signin />
+          <Home />
       </Route>
-      <Route path="/signin">
-          <Signin />
+      <Route path="/home">
+          <Home />
       </Route>
-      <Route path="/register">
-          <Register />
+      <Route path="/addshow">
+          <AddShow />
+      </Route>
+      <Route path="/addsmashup">
+          <AddSmashUp />
       </Route>
     </BrowserRouter>
   );
 }
 
-export default UnauthNav;
+export default AuthNav;

@@ -1,6 +1,6 @@
 import {useContext} from 'react';
 import {Context} from './context/AuthContext';
-import Home from './authflow/Home';
+import AuthNav from './authflow/AuthNav';
 import UnauthNav from './unauthflow/UnauthNav';
 
 const Main = () => {
@@ -10,7 +10,7 @@ const Main = () => {
       <>
         <div className="main">
           { isAuthed
-            ? <Home />
+            ? <AuthNav />
             : <UnauthNav/>
           }
 

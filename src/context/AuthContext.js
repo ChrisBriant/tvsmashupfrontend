@@ -89,6 +89,7 @@ const signin = (dispatch) => async ({email, password}) => {
 const isAuthed = () => {
   const accessToken = localStorage.getItem('access_token');
   if(accessToken) {
+    //// TODO: Actual checking of token will need to go here
     return true;
   } else {
     return false;
