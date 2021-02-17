@@ -1,9 +1,26 @@
-
-
+import AutoComplete from '../components/AutoComplete';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const AddSmashup = () => {
   return (
-    <h1>Add Smashup Goes Here</h1>
+    <Container>
+      <Row>
+        <Col>
+          <h1>Add a New Smashup</h1>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <AutoComplete
+            label="First Show"
+            placeholder="Start typing the name of a show"
+            ariaLabel="First Show"
+          />
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
