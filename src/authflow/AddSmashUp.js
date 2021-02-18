@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col';
 import {Context} from '../context/SmashUpContext';
 
 const AddSmashup = () => {
-  const {state: {showVs}} = useContext(Context);
+  const {state: {showVs, errorMessage}} = useContext(Context);
 
   console.log('SHOW VS',showVs);
 
@@ -41,6 +41,7 @@ const AddSmashup = () => {
           />
         </Col>
       </Row>
+      <Row><Col>{errorMessage}</Col></Row>
     </Container>
   );
 }

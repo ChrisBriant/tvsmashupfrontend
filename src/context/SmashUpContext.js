@@ -6,11 +6,13 @@ const defaultState = {
   smashups: [],
   shows: [],
   showVs: { show1 : {}, show2 : {}},
+  errorMessage : '',
   BASEURL: 'http://localhost:8000'
 };
 
 const smashUpReducer = (state,action) => {
   let newShows;
+  let errorMessage = '';
 
   switch(action.type) {
     case 'setSmashups':
@@ -18,14 +20,21 @@ const smashUpReducer = (state,action) => {
     case 'setShows':
       return {...state,shows:action.payload};
     case 'setShow':
+
       newShows = state.showVs;
       newShows[`show${action.payload.vsIndex}`] = action.payload;
+      //Check to see if they are different values
+      if(newShows.show1.id === newShows.show2.id) {
+        //Reset if match
+        newShows[`show${action.payload.vsIndex}`] = {};
+        errorMessage = 'Both shows must be different';
+      }
       // if(action.payload.vsIndex === 1) {
       //   newShows.show1 = action.payload;
       // } else {
       //   newShows.show2 = action.payload;
       // }
-      return {...state,showVs:newShows};
+      return {...state,showVs:newShows,errorMessage:errorMessage};
     case 'clearShows':
       return {...state,shows:[]};
     default:
