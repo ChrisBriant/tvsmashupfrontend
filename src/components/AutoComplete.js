@@ -2,13 +2,16 @@ import {useState, useContext} from 'react';
 import FormControl from 'react-bootstrap/FormControl';
 import InputGroup from 'react-bootstrap/InputGroup';
 
+import {Context as UIContext} from '../context/UIControlContext';
 import {Context} from '../context/SmashUpContext';
 import SearchMenu from './SearchMenu';
 
 
 const AutoComplete = props => {
   const {searchShows,clearShows, state: {shows}} = useContext(Context);
+  const {setFocusedVsInput} = useContext(UIContext);
   const [show,setShow] = useState('');
+  const [activeSearch,setActiveSearch] = useState(0);
 
   const handleChange = (e) => {
     setShow(e.target.value);
@@ -17,6 +20,15 @@ const AutoComplete = props => {
     } else {
       clearShows();
     }
+  }
+
+  const handleChangeFocus = () => {
+    console.log(document.activeElement.tagName);
+    // if (document.activeElement.tagName === "INPUT")  {
+    //   setActiveSearch(false);
+    // } else {
+    //   setActiveSearch(true);
+    // }
   }
 
 
@@ -31,9 +43,10 @@ const AutoComplete = props => {
           aria-label={props.ariaLabel}
           aria-describedby="basic-addon1"
           onChange={handleChange}
+          onFocus={() => setFocusedVsInput(props.shownumber)}
         />
       </InputGroup>
-      <SearchMenu />
+      <SearchMenu shownumber={props.shownumber} active={activeSearch}/>
     </div>
   );
 }

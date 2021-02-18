@@ -5,18 +5,27 @@ import tvApi from '../api/tvsmashupapi';
 const defaultState = {
   smashups: [],
   shows: [],
-  show: {},
+  showVs: { show1 : {}, show2 : {}},
   BASEURL: 'http://localhost:8000'
 };
 
 const smashUpReducer = (state,action) => {
+  let newShows;
+
   switch(action.type) {
     case 'setSmashups':
       return {...state,smashups:action.payload};
     case 'setShows':
       return {...state,shows:action.payload};
     case 'setShow':
-      return {...state,show:action.payload};
+      newShows = state.showVs;
+      newShows[`show${action.payload.vsIndex}`] = action.payload;
+      // if(action.payload.vsIndex === 1) {
+      //   newShows.show1 = action.payload;
+      // } else {
+      //   newShows.show2 = action.payload;
+      // }
+      return {...state,showVs:newShows};
     case 'clearShows':
       return {...state,shows:[]};
     default:
