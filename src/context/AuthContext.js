@@ -1,5 +1,6 @@
 import createDataContext from './createDataContext';
 import tvApi from '../api/tvsmashupapi';
+import decode from 'jwt-decode';
 //import {navigate} from '../navigationRef';
 
 const defaultState = {
@@ -67,7 +68,7 @@ const signup = dispatch => async ({email, password}) => {
 const signin = (dispatch) => async ({email, password}) => {
   try {
     console.log(JSON.stringify({email,password}));
-    const response = await tvApi.post('/api/authenticate/',
+    const response = await tvApi.post('/authenticate/',
                                         {email,password}
                       )
                       .then(res => {
@@ -89,6 +90,8 @@ const signin = (dispatch) => async ({email, password}) => {
 const isAuthed = () => {
   const accessToken = localStorage.getItem('access_token');
   if(accessToken) {
+    const decoded = decode(accessToken);
+    console.log(decoded);
     //// TODO: Actual checking of token will need to go here
     return true;
   } else {

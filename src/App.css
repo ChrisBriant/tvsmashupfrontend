@@ -39,3 +39,9 @@
   background: #e3e3e3;
   padding:2px;
 }
+
+.show-select-img {
+  margin: 1rem;
+  width: 40vh;
+  height: 30vh;
+}

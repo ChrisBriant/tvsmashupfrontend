@@ -1,5 +1,6 @@
 import createDataContext from './createDataContext';
 import tvApi from '../api/tvsmashupapi';
+import {multipartConn} from '../api/connections';
 //import {navigate} from '../navigationRef';
 
 const defaultState = {
@@ -67,9 +68,19 @@ const clearShows = (dispatch) => async () => {
   dispatch({type:'clearShows', payload:null});
 }
 
+const addShow = (dispatch) => async (formData) => {
+  await multipartConn.post('/api/addshow/',formData)
+          .then(res => {
+              console.log(res);
+              console.log(res.data);
+          }).catch(err => {
+              console.log('I am error',err);
+          }); 
+}
+
 export const {Provider, Context} = createDataContext (
   smashUpReducer,
-  { getSmashups, searchShows, setShow, clearShows },
+  { getSmashups, searchShows, setShow, clearShows, addShow },
   {...defaultState}
   //{smashups: [], shows: [], show: {}, BASEURL: 'http://localhost:8000' }
 );
