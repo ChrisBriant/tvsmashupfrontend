@@ -6,8 +6,9 @@ import {multipartConn} from '../api/connections';
 const defaultState = {
   smashups: [],
   shows: [],
-  showVs: { show1 : {}, show2 : {}},
+  showVs: { show1 : {name:''}, show2 : {name:''}},
   errorMessage : '',
+  addedShow : null,
   BASEURL: 'http://localhost:8000'
 };
 
@@ -38,6 +39,12 @@ const smashUpReducer = (state,action) => {
       return {...state,showVs:newShows,errorMessage:errorMessage};
     case 'clearShows':
       return {...state,shows:[]};
+    case 'sendError':
+      return {...state,errorMessage:action.payload}
+    case 'addShowSuccess':
+      return {...state,addedShow:action.payload}
+    case 'resetShowSuccess':
+      return {...state,addedShow:action.payload}
     default:
       return defaultState;
   }
@@ -64,23 +71,33 @@ const setShow = (dispatch) => async (show) => {
   dispatch({type:'setShow', payload:show});
 }
 
+const resetShowSuccess = (dispatch) => async (show) => {
+  dispatch({type:'resetShowSuccess', payload:null});
+}
+
 const clearShows = (dispatch) => async () => {
   dispatch({type:'clearShows', payload:null});
 }
+
 
 const addShow = (dispatch) => async (formData) => {
   await multipartConn.post('/api/addshow/',formData)
           .then(res => {
               console.log(res);
               console.log(res.data);
+              dispatch({type:'addShowSuccess', payload:{name: res.data.name, message: `You have successfully added the show ${res.data.name}.`}});
           }).catch(err => {
-              console.log('I am error',err);
-          }); 
+              console.log('I am err', err.response.status);
+              if(err.response.status === 401) {
+                dispatch({type:'sendError', payload:'You are not authorised to perform this action'});
+              }
+
+          });
 }
 
 export const {Provider, Context} = createDataContext (
   smashUpReducer,
-  { getSmashups, searchShows, setShow, clearShows, addShow },
+  { getSmashups, searchShows, setShow, clearShows, addShow, resetShowSuccess },
   {...defaultState}
   //{smashups: [], shows: [], show: {}, BASEURL: 'http://localhost:8000' }
 );

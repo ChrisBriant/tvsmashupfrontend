@@ -92,8 +92,13 @@ const isAuthed = () => {
   if(accessToken) {
     const decoded = decode(accessToken);
     console.log(decoded);
+    if(decoded.exp < Date.now() / 1000) {
+      return false;
+    } else {
+      return true;
+    }
     //// TODO: Actual checking of token will need to go here
-    return true;
+
   } else {
     return false;
   }

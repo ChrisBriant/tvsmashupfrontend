@@ -9,7 +9,12 @@ import Home from './Home';
 import AddShow from './AddShow';
 import AddSmashUp from './AddSmashUp';
 
-const AuthNav = () => {
+const AuthNav = (history) => {
+  const handleRouteChange = () => {
+    alert('Route Changed');
+  }
+
+
 
   return (
     <BrowserRouter>
@@ -41,7 +46,7 @@ const AuthNav = () => {
       <Route path="/home">
           <Home />
       </Route>
-      <Route path="/addshow">
+      <Route path="/addshow" onChange={handleRouteChange}>
           <AddShow />
       </Route>
       <Route path="/addsmashup">
