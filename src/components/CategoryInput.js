@@ -24,9 +24,8 @@ const CategoryInput = () => {
     addToCatList(category);
   }
 
-  const removeCategory = (idx) => {
-    console.log(idx);
-    removeFromCatList(idx);
+  const removeCategory = (cat) => {
+    removeFromCatList(cat);
   }
 
   return(
@@ -54,13 +53,13 @@ const CategoryInput = () => {
           {
             catList.length > 0
             ? <>
-                <p>My Categories</p>
+                <p><strong>My Categories</strong></p>
                 {
                   catList.map((cat,i) => (
-                    <Row key={i}>
-                      <Col>Category {i}</Col>
+                    <Row key={i} className="add-space">
+                      <Col><strong>Category {i+1}</strong></Col>
                       <Col>{cat}</Col>
-                      <Col><Button onClick={() => removeCategory(i)}>Remove</Button></Col>
+                      <Col><Button onClick={() => removeCategory(cat)}>Remove</Button></Col>
                     </Row>
                   ))
                 }

@@ -6,7 +6,7 @@ import {multipartConn} from '../api/connections';
 const defaultState = {
   smashups: [],
   shows: [],
-  showVs: { show1 : {name:''}, show2 : {name:''}},
+  showVs: { show1 : {name:'', id:null}, show2 : {name:'', id:null}},
   errorMessage : '',
   addedShow : null,
   BASEURL: 'http://localhost:8000'

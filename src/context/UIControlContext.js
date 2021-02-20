@@ -12,7 +12,7 @@ const uiControlReducer = (state,action) => {
     case 'addToCatList':
       return {...state,catList:[...state.catList,action.payload]};
     case 'removeFromCatList':
-      let newCatList = state.catList.pop(action.payload);
+      let newCatList = state.catList.filter((cat) => (cat !== action.payload));
       console.log('REMOVING', action.payload, newCatList);
       return {...state,catList:newCatList};
     case 'resetCatList':
@@ -30,8 +30,8 @@ const addToCatList = (dispatch) => async (cat) => {
   dispatch({type:'addToCatList', payload:cat});
 }
 
-const removeFromCatList = (dispatch) => async (idx) => {
-  dispatch({type:'removeFromCatList', payload:idx});
+const removeFromCatList = (dispatch) => async (cat) => {
+  dispatch({type:'removeFromCatList', payload:cat});
 }
 
 

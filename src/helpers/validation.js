@@ -17,3 +17,12 @@ export function isFileTypeValid(file) {
   }
 
 }
+
+export function isValidSmashUp(smashUp) {
+  console.log('PAYLOAD', smashUp);
+  if(smashUp.show1 && smashUp.show2 ) {
+    return true;
+  } else {
+    return false;
+  }
+}

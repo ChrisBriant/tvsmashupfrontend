@@ -3,16 +3,29 @@ import AutoComplete from '../components/AutoComplete';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
 import {Context} from '../context/SmashUpContext';
 import {Context as UIContext} from '../context/UIControlContext';
 import CategoryInput from '../components/CategoryInput';
+import {isValidSmashUp} from '../helpers/validation';
 
 const AddSmashup = () => {
   const {state: {showVs, errorMessage}} = useContext(Context);
   const {state: {catList}} = useContext(UIContext);
 
   console.log('CAT LIST',catList);
+
+  const submitSmashup = async () => {
+    console.log(showVs);
+    let payload = {
+        show1: showVs.show1.id,
+        show2: showVs.show2.id,
+        categories: catList
+    }
+    console.log(isValidSmashUp(payload));
+    //createSmashup();
+  }
 
   return (
     <Container>
@@ -73,6 +86,11 @@ const AddSmashup = () => {
           </>
         : null
       }
+      <Row>
+        <Col>
+          <Button onClick={submitSmashup}>Create Smashup</Button>
+        </Col>
+      </Row>
     </Container>
   );
 }
