@@ -11,7 +11,7 @@ import CategoryInput from '../components/CategoryInput';
 import {isValidSmashUp} from '../helpers/validation';
 
 const AddSmashup = () => {
-  const {state: {showVs, errorMessage}} = useContext(Context);
+  const {createSmashup, state: {showVs, errorMessage}} = useContext(Context);
   const {state: {catList}} = useContext(UIContext);
 
   console.log('CAT LIST',catList);
@@ -23,7 +23,9 @@ const AddSmashup = () => {
         show2: showVs.show2.id,
         categories: catList
     }
-    console.log(isValidSmashUp(payload));
+    if (isValidSmashUp(payload)) {
+      createSmashup(payload);
+    }
     //createSmashup();
   }
 
@@ -57,7 +59,6 @@ const AddSmashup = () => {
           />
         </Col>
       </Row>
-      <Row><Col>{errorMessage}</Col></Row>
       {
         showVs.show1.name !== '' && showVs.show2.name !== ''
         ?
@@ -89,6 +90,11 @@ const AddSmashup = () => {
       <Row>
         <Col>
           <Button onClick={submitSmashup}>Create Smashup</Button>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <p className="error">{errorMessage}</p>
         </Col>
       </Row>
     </Container>

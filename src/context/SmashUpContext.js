@@ -1,6 +1,6 @@
 import createDataContext from './createDataContext';
 import tvApi from '../api/tvsmashupapi';
-import {multipartConn} from '../api/connections';
+import {multipartConn, tvApi as apiWithToken} from '../api/connections';
 //import {navigate} from '../navigationRef';
 
 const defaultState = {
@@ -45,6 +45,9 @@ const smashUpReducer = (state,action) => {
       return {...state,addedShow:action.payload}
     case 'resetShowSuccess':
       return {...state,addedShow:action.payload}
+    case 'setSmashup':
+      console.log('Set Smashup')
+      //return {...state,addedShow:action.payload}
     default:
       return defaultState;
   }
@@ -66,6 +69,25 @@ const searchShows = (dispatch) => async (searchStr) => {
                       dispatch({type:'setShows', payload:res.data});
                     });
 }
+
+
+const createSmashup = (dispatch) => async (data) => {
+  console.log('Sending ',data);
+  const response = await apiWithToken.post('/api/addsmashup/',data)
+                    .then(res => {
+                      console.log("success",res.data);
+                      dispatch({type:'setSmashup', payload:res.data});
+                    }).catch(err => {
+                        console.log('I am err', err.response.status);
+                        if(err.response.status === 400) {
+                          console.log(err.response);
+                          dispatch({type:'sendError', payload:err.response.data.message});
+                        } else if(err.response.status === 401) {
+                          dispatch({type:'sendError', payload:'You are not authorised to perform this action'});
+                       }
+                    });
+}
+
 
 const setShow = (dispatch) => async (show) => {
   dispatch({type:'setShow', payload:show});
@@ -97,7 +119,7 @@ const addShow = (dispatch) => async (formData) => {
 
 export const {Provider, Context} = createDataContext (
   smashUpReducer,
-  { getSmashups, searchShows, setShow, clearShows, addShow, resetShowSuccess },
+  { getSmashups, searchShows, setShow, clearShows, addShow, resetShowSuccess, createSmashup },
   {...defaultState}
   //{smashups: [], shows: [], show: {}, BASEURL: 'http://localhost:8000' }
 );
