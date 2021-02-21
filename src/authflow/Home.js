@@ -1,4 +1,6 @@
 import {useContext,useEffect} from 'react';
+import {withRouter} from 'react-router';
+
 import {Context} from '../context/SmashUpContext';
 import Canvas from '../components/Canvas';
 import Container from 'react-bootstrap/Container';
@@ -7,11 +9,11 @@ import Col from 'react-bootstrap/Col';
 //<Canvas width="300" height="200" />
 
 
-const Home = () => {
-  const {getSmashups,getSmashup, state: {smashups,selectedSmashup,BASEURL}} = useContext(Context);
+const Home = (props) => {
+  const {getSmashups,resetSmashups, state: {smashups,selectedSmashup,BASEURL}} = useContext(Context);
 
   useEffect( () => {
-    console.log('Using Effect');
+    resetSmashups();
     getSmashups();
   },[]);
 
@@ -21,7 +23,7 @@ const Home = () => {
   const viewSmashUp = (e,id) => {
     e.preventDefault();
     console.log('Smashup ID', id);
-    getSmashup(id);
+    props.history.push(`/viewsmashup/${id}`);
 
   }
 
@@ -40,6 +42,7 @@ const Home = () => {
               <Row>
                 <Col>
                   <Canvas
+                    id={smashup.id}
                     width="200"
                     height="100"
                     img1={BASEURL+smashup.show1.tv_image.picture}
@@ -61,4 +64,4 @@ const Home = () => {
   );
 }
 
-export default Home;
+export default withRouter(Home);

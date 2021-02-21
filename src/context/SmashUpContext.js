@@ -46,6 +46,10 @@ const smashUpReducer = (state,action) => {
       return {...state,addedShow:action.payload}
     case 'resetShowSuccess':
       return {...state,addedShow:action.payload}
+    case 'resetSmashup':
+      return {...state,selectedSmashup:action.payload}
+    case 'resetSmashups':
+      return {...state,smashups:[]}
     case 'setSmashup':
       //return {...state,selectedSmashup:action.payload}
       console.log('SETTING SMASHUP')
@@ -134,10 +138,19 @@ const addShow = (dispatch) => async (formData) => {
           });
 }
 
+const resetSmashup = (dispatch) => () => {
+  dispatch({type:'resetSmashup', payload:null});
+}
+
+const resetSmashups = (dispatch) => () => {
+  dispatch({type:'resetSmashups', payload:null});
+}
+
+
 export const {Provider, Context} = createDataContext (
   smashUpReducer,
   { getSmashups, searchShows, setShow, clearShows, addShow, resetShowSuccess,
-    createSmashup, getSmashup },
+    createSmashup, getSmashup, resetSmashup,resetSmashups },
   {...defaultState}
   //{smashups: [], shows: [], show: {}, BASEURL: 'http://localhost:8000' }
 );

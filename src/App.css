@@ -49,3 +49,11 @@
 .add-space {
   margin: 4px;
 }
+
+.rating-container {
+  display: flex;
+}
+
+.rating-container > div {
+  padding: 1px;
+}
