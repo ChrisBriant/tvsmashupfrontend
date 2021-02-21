@@ -8,6 +8,7 @@ import { Route, BrowserRouter } from 'react-router-dom';
 import Home from './Home';
 import AddShow from './AddShow';
 import AddSmashUp from './AddSmashUp';
+import ViewSmashUp from '../neutral/ViewSmashup';
 
 const AuthNav = (history) => {
   const handleRouteChange = () => {
@@ -51,6 +52,9 @@ const AuthNav = (history) => {
       </Route>
       <Route path="/addsmashup">
           <AddSmashUp />
+      </Route>
+      <Route path="/viewsmashup/:id">
+          <ViewSmashUp />
       </Route>
     </BrowserRouter>
   );

@@ -9,6 +9,7 @@ const defaultState = {
   showVs: { show1 : {name:'', id:null}, show2 : {name:'', id:null}},
   errorMessage : '',
   addedShow : null,
+  selectedSmashup: null,
   BASEURL: 'http://localhost:8000'
 };
 
@@ -46,8 +47,9 @@ const smashUpReducer = (state,action) => {
     case 'resetShowSuccess':
       return {...state,addedShow:action.payload}
     case 'setSmashup':
-      console.log('Set Smashup')
-      //return {...state,addedShow:action.payload}
+      //return {...state,selectedSmashup:action.payload}
+      console.log('SETTING SMASHUP')
+      return{...state,selectedSmashup:action.payload}
     default:
       return defaultState;
   }
@@ -89,6 +91,21 @@ const createSmashup = (dispatch) => async (data) => {
 }
 
 
+const getSmashup = (dispatch) => async (data) => {
+  const response = await tvApi.get(`/api/getsmashup/?id=${data}`)
+                    .then(res => {
+                      console.log("success",res.data);
+                      dispatch({type:'setSmashup', payload:res.data});
+                    }).catch(err => {
+                        console.log('I am err');
+                        if(err.response.status === 400) {
+                          console.log(err.response);
+                          dispatch({type:'sendError', payload:err.response.data.message});
+                        }
+                    });
+}
+
+
 const setShow = (dispatch) => async (show) => {
   dispatch({type:'setShow', payload:show});
 }
@@ -119,7 +136,8 @@ const addShow = (dispatch) => async (formData) => {
 
 export const {Provider, Context} = createDataContext (
   smashUpReducer,
-  { getSmashups, searchShows, setShow, clearShows, addShow, resetShowSuccess, createSmashup },
+  { getSmashups, searchShows, setShow, clearShows, addShow, resetShowSuccess,
+    createSmashup, getSmashup },
   {...defaultState}
   //{smashups: [], shows: [], show: {}, BASEURL: 'http://localhost:8000' }
 );

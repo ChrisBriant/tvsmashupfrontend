@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col';
 
 
 const Home = () => {
-  const {getSmashups, state: {smashups,BASEURL}} = useContext(Context);
+  const {getSmashups,getSmashup, state: {smashups,selectedSmashup,BASEURL}} = useContext(Context);
 
   useEffect( () => {
     console.log('Using Effect');
@@ -16,6 +16,14 @@ const Home = () => {
   },[]);
 
   console.log('Here are the smashups',smashups);
+  console.log('Selected smashup', selectedSmashup);
+
+  const viewSmashUp = (e,id) => {
+    e.preventDefault();
+    console.log('Smashup ID', id);
+    getSmashup(id);
+
+  }
 
   return (
     <Container>
@@ -38,6 +46,12 @@ const Home = () => {
                     img2={BASEURL+smashup.show2.tv_image.picture}
                   />
                 </Col>
+              </Row>
+              <Row>
+                <Col><p><strong>Number of categories </strong>{smashup.categories.length}</p></Col>
+              </Row>
+              <Row>
+                <Col><a href="#" onClick={(e) => viewSmashUp(e,smashup.id)}>View</a></Col>
               </Row>
             </Col>
           </Row>
