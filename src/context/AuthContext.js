@@ -4,7 +4,10 @@ import decode from 'jwt-decode';
 //import {navigate} from '../navigationRef';
 
 const defaultState = {
-  authed: false
+  authed: false,
+  token: null,
+  errorMessage: '',
+  userId: null
 };
 
 const authReducer = (state,action) => {
@@ -21,6 +24,9 @@ const authReducer = (state,action) => {
     //   return {...state};
     case 'clear_error_message':
       return {...state,errorMessage:''};
+    case 'setId':
+      console.log('Setting ID', action.payload);
+      return {...state,userId:action.payload};
     case 'signout':
       return {token: null, errorMessage: ''};
     default:
@@ -53,7 +59,11 @@ const signup = dispatch => async ({email, password}) => {
                           //SAVE TO STORAGE
                           localStorage.setItem("access_token", res.data.access);
                           console.log("access", res.data.access);
-                                dispatch({type:'signin', payload:res.data.access});
+                          dispatch({type:'signin', payload:res.data.access});
+                          const decoded = decode(res.data.access);
+                          console.log(decoded);
+                          dispatch({type:'setAuthed', payload:true});
+                          dispatch({type:'setId', payload:decoded.user_id});
                         });
       // await AsyncStorage.setItem('token',response.data.access);
       //Navigate to main flow
@@ -87,11 +97,13 @@ const signin = (dispatch) => async ({email, password}) => {
   }
 }
 
-const isAuthed = () => {
+const isAuthed = (dispatch) => () => {
   const accessToken = localStorage.getItem('access_token');
   if(accessToken) {
     const decoded = decode(accessToken);
     console.log(decoded);
+    dispatch({type:'setAuthed', payload:true});
+    dispatch({type:'setId', payload:decoded.user_id});
     if(decoded.exp < Date.now() / 1000) {
       return false;
     } else {
@@ -100,6 +112,7 @@ const isAuthed = () => {
     //// TODO: Actual checking of token will need to go here
 
   } else {
+    console.log('Here')
     return false;
   }
 }
@@ -114,5 +127,5 @@ const signout = dispatch => async () => {
 export const {Provider, Context} = createDataContext (
   authReducer,
   { signin, signout, signup, clearErrorMessage, tryLocalSignin, isAuthed},
-  {token: null, errorMessage: ''}
+  {...defaultState}
 );
