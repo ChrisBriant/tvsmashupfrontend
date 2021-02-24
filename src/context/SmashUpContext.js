@@ -96,7 +96,7 @@ const createSmashup = (dispatch) => async (data) => {
 
 
 const getSmashup = (dispatch) => async (data) => {
-  const response = await tvApi.get(`/api/getsmashup/?id=${data}`)
+  const response = await apiWithToken.get(`/api/getsmashup/?id=${data}`)
                     .then(res => {
                       console.log("success",res.data);
                       dispatch({type:'setSmashup', payload:res.data});

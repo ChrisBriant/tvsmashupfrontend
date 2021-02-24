@@ -84,7 +84,7 @@ const ViewSmashUp = () => {
                         <p>{cat.category}</p>
                       </Col>
                       <Col>
-                        <Rating />
+                        <Rating presentation={true} rating={cat.average_rating.rating__avg}/>
                       </Col>
                     </Row>
                   ))

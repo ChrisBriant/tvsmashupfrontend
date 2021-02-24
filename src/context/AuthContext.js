@@ -86,7 +86,10 @@ const signin = (dispatch) => async ({email, password}) => {
                         //SAVE TO STORAGE
                         localStorage.setItem("access_token", res.data.access);
                         console.log("access", res.data.access);
-                              dispatch({type:'signin', payload:res.data.access});
+                        dispatch({type:'signin', payload:res.data.access});
+                        const decoded = decode(res.data.access);
+                        dispatch({type:'setAuthed', payload:true});
+                        dispatch({type:'setId', payload:decoded.user_id});
                       });
   } catch (err){
     console.log(err);
@@ -102,17 +105,22 @@ const isAuthed = (dispatch) => () => {
   if(accessToken) {
     const decoded = decode(accessToken);
     console.log(decoded);
-    dispatch({type:'setAuthed', payload:true});
-    dispatch({type:'setId', payload:decoded.user_id});
     if(decoded.exp < Date.now() / 1000) {
+      console.log('Out of date');
+      dispatch({type:'setUnauthed', payload:null});
+      dispatch({type:'setId', payload:null});
       return false;
     } else {
+      dispatch({type:'setAuthed', payload:true});
+      dispatch({type:'setId', payload:decoded.user_id});
       return true;
     }
     //// TODO: Actual checking of token will need to go here
 
   } else {
     console.log('Here')
+    dispatch({type:'setUnauthed', payload:null});
+    dispatch({type:'setId', payload:null});
     return false;
   }
 }

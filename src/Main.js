@@ -22,7 +22,6 @@ const Main = () => {
             ? <AuthNav />
             : <UnauthNav/>
           }
-
         </div>
       </>
     )
