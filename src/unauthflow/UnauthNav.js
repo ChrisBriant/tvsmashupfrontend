@@ -17,8 +17,8 @@ const UnauthNav = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="signin">Signin</Nav.Link>
-            <Nav.Link href="register">Register</Nav.Link>
+            <Nav.Link href="/signin">Signin</Nav.Link>
+            <Nav.Link href="/register">Register</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -36,7 +36,7 @@ const UnauthNav = () => {
       <Route exact path="/">
           <Signin />
       </Route>
-      <Route path="/signin">
+      <Route exact path="/signin">
           <Signin />
       </Route>
       <Route path="/register">

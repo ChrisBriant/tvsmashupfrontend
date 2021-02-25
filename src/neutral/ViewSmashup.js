@@ -14,7 +14,7 @@ import EditCategories from '../components/EditCategories';
 import Spacer from '../components/Spacer';
 
 const ViewSmashUp = () => {
-  const {getSmashup,resetSmashup,state:{selectedSmashup,BASEURL}} = useContext(Context);
+  const {getSmashup,resetSmashup,state:{successMessage,errorMessage,selectedSmashup,BASEURL}} = useContext(Context);
   const {isAuthed,state:{authed,userId}} = useContext(AuthContext);
   const {addToCatList, removeFromCatList, state:{catList}} = useContext(Context);
 
@@ -29,7 +29,9 @@ const ViewSmashUp = () => {
     getSmashup(id);
   },[]);
 
-
+  const setUpdated = () => {
+    setEditMode(!editMode);
+  }
 
   // if(selectedSmashup.creator.id === userId) {
   //   console.log('I am me');
@@ -74,7 +76,11 @@ const ViewSmashUp = () => {
         <Col>
           {
             editMode
-            ? <EditCategories  categories={selectedSmashup.categories}/>
+            ? <EditCategories
+                  categories={selectedSmashup.categories}
+                  smashupId={selectedSmashup.id}
+                  setUpdated={setUpdated}
+                  />
             :
               <>
                 {
@@ -92,6 +98,12 @@ const ViewSmashUp = () => {
               </>
           }
         </Col>
+      </Row>
+      <Row>
+        <Col>{errorMessage}</Col>
+      </Row>
+      <Row>
+        <Col>{successMessage}</Col>
       </Row>
     </Container>
     :

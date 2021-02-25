@@ -8,6 +8,8 @@ const Signin = (props) => {
   const [pass,setPass] = useState('');
   const {signin} = useContext(Context);
 
+  console.log('SIGN IN');
+
   const handleChangePass = (e) => {
     setPass(e.target.value);
   }

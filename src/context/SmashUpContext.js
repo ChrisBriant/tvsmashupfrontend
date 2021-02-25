@@ -10,12 +10,14 @@ const defaultState = {
   errorMessage : '',
   addedShow : null,
   selectedSmashup: null,
+  successMessage: '',
   BASEURL: 'http://localhost:8000'
 };
 
 const smashUpReducer = (state,action) => {
   let newShows;
   let errorMessage = '';
+  let successMessage = '';
 
   switch(action.type) {
     case 'setSmashups':
@@ -51,9 +53,9 @@ const smashUpReducer = (state,action) => {
     case 'resetSmashups':
       return {...state,smashups:[]}
     case 'setSmashup':
-      //return {...state,selectedSmashup:action.payload}
-      console.log('SETTING SMASHUP')
       return{...state,selectedSmashup:action.payload}
+    case 'setSuccessMessage':
+      return{...state,successMessage:action.payload}
     default:
       return defaultState;
   }
@@ -146,11 +148,31 @@ const resetSmashups = (dispatch) => () => {
   dispatch({type:'resetSmashups', payload:null});
 }
 
+const updateCategories = (dispatch) => async (smashUpId,existing,newcategories) => {
+  let data = {
+    id: smashUpId,
+    existing: existing,
+    new: newcategories
+  }
+  await apiWithToken.post('/api/updatecategories/',data)
+        .then(res => {
+          console.log("success",res.data);
+          dispatch({type:'setSmashup', payload:res.data});
+          dispatch({type:'setSuccessMessage',payload:'Successfully updated categories'});
+        }).catch(err => {
+            console.log('I am err');
+            if(err.response.status === 400) {
+              console.log(err.response);
+              dispatch({type:'sendError', payload:err.response.data.message});
+            }
+        });
+}
+
 
 export const {Provider, Context} = createDataContext (
   smashUpReducer,
   { getSmashups, searchShows, setShow, clearShows, addShow, resetShowSuccess,
-    createSmashup, getSmashup, resetSmashup,resetSmashups },
+    createSmashup, getSmashup, resetSmashup,resetSmashups, updateCategories },
   {...defaultState}
   //{smashups: [], shows: [], show: {}, BASEURL: 'http://localhost:8000' }
 );
