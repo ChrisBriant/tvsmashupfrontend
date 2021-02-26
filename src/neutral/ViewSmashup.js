@@ -83,6 +83,9 @@ const ViewSmashUp = () => {
                   />
             :
               <>
+                <Row>
+                  <Col>Category</Col><Col>{selectedSmashup.show1.name}</Col><Col>{selectedSmashup.show2.name}</Col>
+                </Row>
                 {
                   selectedSmashup.categories.map( (cat) => (
                     <Row key={cat.id}>
@@ -90,7 +93,10 @@ const ViewSmashUp = () => {
                         <p>{cat.category}</p>
                       </Col>
                       <Col>
-                        <Rating presentation={true} rating={cat.average_rating.rating__avg}/>
+                        <Rating presentation={true} rating={cat.show_1_average_rating.show_1_rating__rating__avg}/>
+                      </Col>
+                      <Col>
+                        <Rating presentation={true} rating={cat.show_2_average_rating.show_2_rating__rating__avg}/>
                       </Col>
                     </Row>
                   ))
