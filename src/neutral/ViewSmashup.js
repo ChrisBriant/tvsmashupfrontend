@@ -12,6 +12,7 @@ import {Context as UIContext} from '../context/UIControlContext';
 import Rating from '../components/Rating';
 import EditCategories from '../components/EditCategories';
 import Spacer from '../components/Spacer';
+import RatingModal from '../components/RatingModal';
 
 const ViewSmashUp = () => {
   const {getSmashup,resetSmashup,state:{successMessage,errorMessage,selectedSmashup,BASEURL}} = useContext(Context);
@@ -19,6 +20,7 @@ const ViewSmashUp = () => {
   const {addToCatList, removeFromCatList, state:{catList}} = useContext(Context);
 
   const [editMode, setEditMode] = useState(false);
+  const [showRatingModal, setShowRatingModal] = useState(false);
   console.log('Selected smashup', selectedSmashup);
   const { id } = useParams();
 
@@ -33,6 +35,14 @@ const ViewSmashUp = () => {
     setEditMode(!editMode);
   }
 
+  const showRatingBox = () => {
+    setShowRatingModal(true);
+  }
+
+  const hideRatingBox = () => {
+    setShowRatingModal(false);
+  }
+
   // if(selectedSmashup.creator.id === userId) {
   //   console.log('I am me');
   // }
@@ -43,6 +53,7 @@ const ViewSmashUp = () => {
     selectedSmashup
     ?
     <Container>
+      <RatingModal show={showRatingModal} toggle={() => {setShowRatingModal(!showRatingModal)}} />
       <Row>
         <Col><h1>{selectedSmashup.show1.name} Vs {selectedSmashup.show2.name}</h1></Col>
       </Row>
@@ -83,12 +94,15 @@ const ViewSmashUp = () => {
                   />
             :
               <>
-                <Row>
-                  <Col>Category</Col><Col>{selectedSmashup.show1.name}</Col><Col>{selectedSmashup.show2.name}</Col>
+                <Row className="left-align-cols">
+                  <Col><strong>Category</strong></Col>
+                  <Col><strong>{selectedSmashup.show1.name}</strong></Col>
+                  <Col><strong>{selectedSmashup.show2.name}</strong></Col>
+                  <Col></Col>
                 </Row>
                 {
                   selectedSmashup.categories.map( (cat) => (
-                    <Row key={cat.id}>
+                    <Row key={cat.id} className="left-align-cols">
                       <Col>
                         <p>{cat.category}</p>
                       </Col>
@@ -97,6 +111,13 @@ const ViewSmashUp = () => {
                       </Col>
                       <Col>
                         <Rating presentation={true} rating={cat.show_2_average_rating.show_2_rating__rating__avg}/>
+                      </Col>
+                      <Col>
+                        {
+                          cat.already_rated
+                          ? <p>Already rated</p>
+                          : <a href='#' onClick={showRatingBox}>Rate</a>
+                        }
                       </Col>
                     </Row>
                   ))

@@ -57,3 +57,7 @@
 .rating-container > div {
   padding: 1px;
 }
+
+.left-align-cols > div {
+  text-align: left;
+}
