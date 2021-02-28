@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import vs from '../assets/vs.svg';
 
 
 const Canvas = props => {
@@ -29,18 +30,27 @@ const Canvas = props => {
     let image1 = new Image();
     image1.src = props.img1;
     image1.onload = function() {
+        context.globalAlpha = 0.5;
         context.drawImage(image1,0,0,props.width/2,props.height/2);
         let image2 = new Image();
         image2.src = props.img2;
         image2.onload = function() {
-            context.beginPath();
-            context.moveTo(...topRght);
-            context.lineTo(...botLeft);
-            context.lineTo(...botRght);
-            context.lineTo(...topRght);
-            context.closePath();
-            context.clip();
+            let vsImage = new Image();
+            vsImage.src = vs;
+
+            // context.beginPath();
+            // context.moveTo(...topRght);
+            // context.lineTo(...botLeft);
+            // context.lineTo(...botRght);
+            // context.lineTo(...topRght);
+            // context.closePath();
+            // context.clip();
             context.drawImage(image2,props.width/2,props.height/2,props.width/2,props.height/2);
+            vsImage.onload = function() {
+              console.log('Here is the vs image',vsImage);
+              context.globalAlpha = 1;
+              context.drawImage(vsImage,props.width/6,props.height/6,props.width/1.5,props.height/1.5);
+            }
         }
     }
   }, []);

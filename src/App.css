@@ -1,3 +1,11 @@
+/*
+  palette
+  61b15a - bright green
+  adce74 - light bright green
+  fff76a - bright yellow
+  ffce89 - brown yellow
+*/
+
 .App {
   text-align: center;
   min-height: 100vh;
@@ -60,4 +68,43 @@
 
 .left-align-cols > div {
   text-align: left;
+}
+
+.navbar-custom {
+  background-color:#61b15a;
+}
+
+.navlinks-custom > a:: {
+
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #fff !important;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+    color: #fff76a !important;
+}
+
+.btn-outline-success {
+    color:  #fff76a !important;
+    border-color: #fff76a !important;
+}
+
+.navbar-toggler.collapsed {
+  background-color: #61b15a
+}
+
+header {
+  background-image: -webkit-gradient(linear,left top, left bottom,from(rgba(255, 255, 255, 0.9)),to(rgba(255, 255, 255, 0.9))),url("http://localhost:3000/smashupmontage.png");
+  background-image: linear-gradient(rgba(255, 255, 255, 0.9),rgba(255, 255, 255, 0.9)),url("http://localhost:3000/smashupmontage.png");
+  min-height :88vh;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+header > h1 {
+  opacity: 1;
 }
