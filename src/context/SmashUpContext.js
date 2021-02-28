@@ -14,6 +14,13 @@ const defaultState = {
   BASEURL: 'http://localhost:8000'
 };
 
+const setAuthHeader = () => {
+  tvApi.defaults.headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+  }
+}
+
 const smashUpReducer = (state,action) => {
   let newShows;
   let errorMessage = '';
@@ -97,8 +104,12 @@ const createSmashup = (dispatch) => async (data) => {
 }
 
 
-const getSmashup = (dispatch) => async (data) => {
-  const response = await apiWithToken.get(`/api/getsmashup/?id=${data}`)
+const getSmashup = (dispatch) => async (data,authed) => {
+  if(authed) {
+    setAuthHeader();
+  }
+
+  const response = await tvApi.get(`/api/getsmashup/?id=${data}`)
                     .then(res => {
                       console.log("success",res.data);
                       dispatch({type:'setSmashup', payload:res.data});

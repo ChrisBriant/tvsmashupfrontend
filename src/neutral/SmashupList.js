@@ -9,7 +9,7 @@ import Col from 'react-bootstrap/Col';
 //<Canvas width="300" height="200" />
 
 
-const Home = (props) => {
+const SmashupList = (props) => {
   const {getSmashups,resetSmashups, state: {smashups,selectedSmashup,BASEURL}} = useContext(Context);
 
   useEffect( () => {
@@ -64,4 +64,4 @@ const Home = (props) => {
   );
 }
 
-export default withRouter(Home);
+export default withRouter(SmashupList);

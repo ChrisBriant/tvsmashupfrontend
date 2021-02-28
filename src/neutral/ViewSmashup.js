@@ -25,11 +25,11 @@ const ViewSmashUp = () => {
   console.log('Selected smashup', selectedSmashup);
   const { id } = useParams();
 
-  console.log(id);
+  console.log('Here is the id',id);
 
   useEffect( () => {
     resetSmashup();
-    getSmashup(id);
+    getSmashup(id,authed);
   },[]);
 
   const setUpdated = () => {

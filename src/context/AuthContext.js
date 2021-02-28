@@ -127,9 +127,9 @@ const isAuthed = (dispatch) => () => {
 
 
 const signout = dispatch => async () => {
-  // await AsyncStorage.removeItem('token');
-  // dispatch({type: 'signout'});
-  // //navigate('loginFlow');
+  localStorage.removeItem('access_token');
+  dispatch({type:'setUnauthed', payload:null});
+  dispatch({type:'setId', payload:null});
 }
 
 export const {Provider, Context} = createDataContext (

@@ -7,6 +7,8 @@ import Button from 'react-bootstrap/Button';
 import { Route, BrowserRouter } from 'react-router-dom';
 import Signin from './Signin';
 import Register from './Register';
+import SmashupList from '../neutral/SmashupList';
+import ViewSmashUp from '../neutral/ViewSmashup';
 
 const UnauthNav = () => {
 
@@ -17,6 +19,7 @@ const UnauthNav = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
+            <Nav.Link href="/home">Home</Nav.Link>
             <Nav.Link href="/signin">Signin</Nav.Link>
             <Nav.Link href="/register">Register</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
@@ -34,13 +37,19 @@ const UnauthNav = () => {
         </Navbar.Collapse>
       </Navbar>
       <Route exact path="/">
-          <Signin />
+          <SmashupList />
+      </Route>
+      <Route path="/home">
+          <SmashupList />
       </Route>
       <Route exact path="/signin">
           <Signin />
       </Route>
       <Route path="/register">
           <Register />
+      </Route>
+      <Route path="/viewsmashup/:id">
+          <ViewSmashUp />
       </Route>
     </BrowserRouter>
   );
