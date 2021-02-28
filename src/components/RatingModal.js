@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import {Context} from '../context/SmashUpContext';
+import {Context as AuthContext} from '../context/AuthContext';
 
 const RatingModal = props => {
   const [show, setShow] = useState(false);
@@ -15,6 +16,7 @@ const RatingModal = props => {
     show_2 : null
   });
   const {addRating} = useContext(Context);
+  const {state:{authed}} = useContext(AuthContext);
 
   const resetRatingsAndToggle = () => {
     setShowRatings({
@@ -42,7 +44,7 @@ const RatingModal = props => {
       ...newShowRatings
     }
     console.log('RATING PAYLOAD', payload);
-    addRating(payload);
+    addRating(payload,authed);
     resetRatingsAndToggle();
   }
 

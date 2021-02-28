@@ -27,9 +27,9 @@ const ViewSmashUp = () => {
 
   console.log('Here is the id',id);
 
-  useEffect( () => {
+  useEffect( async () => {
     resetSmashup();
-    getSmashup(id,authed);
+     await getSmashup(id,authed);
   },[]);
 
   const setUpdated = () => {

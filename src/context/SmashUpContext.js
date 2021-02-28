@@ -63,6 +63,12 @@ const smashUpReducer = (state,action) => {
       return{...state,selectedSmashup:action.payload}
     case 'setSuccessMessage':
       return{...state,successMessage:action.payload}
+    case 'seCategory':
+      //Slot into the selected smashup
+      let newSelectedSmashup = {...state.selectedSmashup};
+      let catIndex = newSelectedSmashup.categories.find(cat => cat.id === action.payload.category.id);
+      newSelectedSmashup.categories[catIndex] = action.payload;
+      return{...state,selectedSmashup:newSelectedSmashup};
     default:
       return defaultState;
   }
@@ -179,15 +185,19 @@ const updateCategories = (dispatch) => async (smashUpId,existing,newcategories) 
         });
 }
 
-const addRating = (dispatch) => async (data) => {
+const addRating = (dispatch) => async (data,authed) => {
+  if(authed) {
+    setAuthHeader();
+  }
 
-  await apiWithToken.post('/api/addrating/',data)
+  await tvApi.post('/api/addrating/',data)
         .then(res => {
           console.log("success",res.data);
-          dispatch({type:'setSmashup', payload:res.data});
+          dispatch({type:'setCategory', payload:res.data});
           dispatch({type:'setSuccessMessage',payload:'Your rating has been added'});
         }).catch(err => {
             console.log('I am err');
+            console.log('AM I AUTHED',authed);
             if(err.response.status === 400) {
               console.log(err.response);
               dispatch({type:'sendError', payload:err.response.data.message});
