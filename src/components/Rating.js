@@ -9,11 +9,15 @@ import { BsStarHalf } from "react-icons/bs";
 const Rating = props => {
   const starColor = {color:'#b88130'};
   const [rating,setRating] = useState(1);
+  //const [id,setId] = useState(0);
   //const [halfStar,setHalfStar] = useState(false);
   const [stars,setStars] = useState([]);
 
 
   useEffect(() => {
+    //if(props.id) {
+      //setId(props.id);
+    //}
     //If component is in presntation mode then the code
     // below is used to determine half star
     if(props.presentation) {
@@ -42,7 +46,10 @@ const Rating = props => {
     }
   },[]);
 
-
+  const dispatchRating = (rating) => {
+    setRating(rating);
+    props.updateRating(props.id,rating);
+  }
 
 
   return (
@@ -63,36 +70,36 @@ const Rating = props => {
         <div>
         {
           rating >= 1
-          ? <BsStarFill style={starColor} onClick={() => setRating(1)} />
-          : <BsStar style={starColor} onClick={() => setRating(1)} />
+          ? <BsStarFill style={starColor} onClick={() => dispatchRating(1)} />
+          : <BsStar style={starColor} onClick={() => dispatchRating(1)} />
         }
         </div>
         <div>
         {
           rating >= 2
-          ? <BsStarFill style={starColor} onClick={() => setRating(2)} />
-          : <BsStar style={starColor} onClick={() => setRating(2)} />
+          ? <BsStarFill style={starColor} onClick={() => dispatchRating(2)} />
+          : <BsStar style={starColor} onClick={() => dispatchRating(2)} />
         }
         </div>
         <div>
         {
           rating >= 3
-          ? <BsStarFill style={starColor} onClick={() => setRating(3)} />
-          : <BsStar style={starColor} onClick={() => setRating(3)} />
+          ? <BsStarFill style={starColor} onClick={() => dispatchRating(3)} />
+          : <BsStar style={starColor} onClick={() => dispatchRating(3)} />
         }
         </div>
         <div>
         {
           rating >= 4
-          ? <BsStarFill style={starColor} onClick={() => setRating(4)} />
-          : <BsStar style={starColor} onClick={() => setRating(4)} />
+          ? <BsStarFill style={starColor} onClick={() => dispatchRating(4)} />
+          : <BsStar style={starColor} onClick={() => dispatchRating(4)} />
         }
         </div>
         <div>
         {
           rating >= 5
-          ? <BsStarFill style={starColor} onClick={() => setRating(5)} />
-          : <BsStar style={starColor} onClick={() => setRating(5)} />
+          ? <BsStarFill style={starColor} onClick={() => dispatchRating(5)} />
+          : <BsStar style={starColor} onClick={() => dispatchRating(5)} />
         }
         </div>
       </div>

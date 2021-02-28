@@ -20,6 +20,7 @@ const ViewSmashUp = () => {
   const {addToCatList, removeFromCatList, state:{catList}} = useContext(Context);
 
   const [editMode, setEditMode] = useState(false);
+  const [selectedCategory,setSelectedCategory] = useState({})
   const [showRatingModal, setShowRatingModal] = useState(false);
   console.log('Selected smashup', selectedSmashup);
   const { id } = useParams();
@@ -35,7 +36,8 @@ const ViewSmashUp = () => {
     setEditMode(!editMode);
   }
 
-  const showRatingBox = () => {
+  const showRatingBox = (cat) => {
+    setSelectedCategory(cat)
     setShowRatingModal(true);
   }
 
@@ -53,7 +55,13 @@ const ViewSmashUp = () => {
     selectedSmashup
     ?
     <Container>
-      <RatingModal show={showRatingModal} toggle={() => {setShowRatingModal(!showRatingModal)}} />
+      <RatingModal
+        show={showRatingModal}
+        toggle={() => {setShowRatingModal(!showRatingModal)}}
+        selectedCategory = {selectedCategory}
+        show1 = {selectedSmashup.show1}
+        show2 = {selectedSmashup.show2}
+      />
       <Row>
         <Col><h1>{selectedSmashup.show1.name} Vs {selectedSmashup.show2.name}</h1></Col>
       </Row>
@@ -116,7 +124,7 @@ const ViewSmashUp = () => {
                         {
                           cat.already_rated
                           ? <p>Already rated</p>
-                          : <a href='#' onClick={showRatingBox}>Rate</a>
+                          : <a href='#' onClick={() => {showRatingBox(cat)}}>Rate</a>
                         }
                       </Col>
                     </Row>

@@ -168,11 +168,28 @@ const updateCategories = (dispatch) => async (smashUpId,existing,newcategories) 
         });
 }
 
+const addRating = (dispatch) => async (data) => {
+
+  await apiWithToken.post('/api/addrating/',data)
+        .then(res => {
+          console.log("success",res.data);
+          dispatch({type:'setSmashup', payload:res.data});
+          dispatch({type:'setSuccessMessage',payload:'Your rating has been added'});
+        }).catch(err => {
+            console.log('I am err');
+            if(err.response.status === 400) {
+              console.log(err.response);
+              dispatch({type:'sendError', payload:err.response.data.message});
+            }
+        });
+}
+
 
 export const {Provider, Context} = createDataContext (
   smashUpReducer,
   { getSmashups, searchShows, setShow, clearShows, addShow, resetShowSuccess,
-    createSmashup, getSmashup, resetSmashup,resetSmashups, updateCategories },
+    createSmashup, getSmashup, resetSmashup,resetSmashups, updateCategories,
+    addRating },
   {...defaultState}
   //{smashups: [], shows: [], show: {}, BASEURL: 'http://localhost:8000' }
 );
