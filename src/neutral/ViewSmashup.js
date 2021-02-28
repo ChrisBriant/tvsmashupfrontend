@@ -1,5 +1,6 @@
 import {useContext, useEffect, useState} from 'react';
 import { useParams } from 'react-router';
+import vs from '../assets/vs.svg';
 import Canvas from '../components/Canvas';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
@@ -63,7 +64,7 @@ const ViewSmashUp = () => {
         show2 = {selectedSmashup.show2}
       />
       <Row>
-        <Col><h1>{selectedSmashup.show1.name} Vs {selectedSmashup.show2.name}</h1></Col>
+        <Col><h1>{selectedSmashup.show1.name} <img alt="vs image" src={vs} className="vsimg-small"/> {selectedSmashup.show2.name}</h1></Col>
       </Row>
       <Row>
         {
@@ -75,65 +76,93 @@ const ViewSmashUp = () => {
       <Row>
         <Col>
           <Canvas
-            width="200"
-            height="100"
+            width="400"
+            height="200"
             img1={BASEURL+selectedSmashup.show1.tv_image.picture}
             img2={BASEURL+selectedSmashup.show2.tv_image.picture}
           />
         </Col>
       </Row>
-      <Row><Col><h2>Categories</h2></Col></Row>
+      <Spacer height="2rem" />
       {
-        authed && userId === selectedSmashup.creator.id
-        ? <Row>
-            <Col><Button onClick={() => setEditMode(!editMode)}>{editMode ? "Cancel" : "Edit Categories"  }</Button></Col>
-          </Row>
-        : null
-      }
-      <Spacer height="1rem"/>
-      <Row>
-        <Col>
+        selectedSmashup.categories.length > 0
+        ?
+        <div className="panel">
+          <Row><Col><h2>Categories</h2></Col></Row>
           {
-            editMode
-            ? <EditCategories
-                  categories={selectedSmashup.categories}
-                  smashupId={selectedSmashup.id}
-                  setUpdated={setUpdated}
-                  />
-            :
-              <>
-                <Row className="left-align-cols">
-                  <Col><strong>Category</strong></Col>
-                  <Col><strong>{selectedSmashup.show1.name}</strong></Col>
-                  <Col><strong>{selectedSmashup.show2.name}</strong></Col>
-                  <Col></Col>
-                </Row>
-                {
-                  selectedSmashup.categories.map( (cat) => (
-                    <Row key={cat.id} className="left-align-cols">
-                      <Col>
-                        <p>{cat.category}</p>
-                      </Col>
-                      <Col>
-                        <Rating presentation={true} rating={cat.show_1_average_rating.show_1_rating__rating__avg}/>
-                      </Col>
-                      <Col>
-                        <Rating presentation={true} rating={cat.show_2_average_rating.show_2_rating__rating__avg}/>
-                      </Col>
-                      <Col>
-                        {
-                          cat.already_rated
-                          ? <p>Already rated</p>
-                          : <a href='#' onClick={() => {showRatingBox(cat)}}>Rate</a>
-                        }
-                      </Col>
-                    </Row>
-                  ))
-                }
-              </>
+            authed && userId === selectedSmashup.creator.id
+            ? <Row>
+                <Col><Button onClick={() => setEditMode(!editMode)}>{editMode ? "Cancel" : "Edit Categories"  }</Button></Col>
+              </Row>
+            : null
           }
-        </Col>
-      </Row>
+          <Spacer height="1rem"/>
+          <Row>
+            <Col>
+              {
+                editMode
+                ? <EditCategories
+                      categories={selectedSmashup.categories}
+                      smashupId={selectedSmashup.id}
+                      setUpdated={setUpdated}
+                      />
+                :
+                  <>
+                    <Row className="left-align-cols">
+                      <Col><strong>Category</strong></Col>
+                      <Col><strong>{selectedSmashup.show1.name}</strong></Col>
+                      <Col><strong>{selectedSmashup.show2.name}</strong></Col>
+                      <Col><strong>Total Ratings</strong></Col>
+                      <Col><strong>Winner</strong></Col>
+                      <Col></Col>
+                    </Row>
+                    {
+                      selectedSmashup.categories.map( (cat) => (
+                        <Row key={cat.id} className="left-align-cols">
+                          <Col>
+                            <p>{cat.category}</p>
+                          </Col>
+                          <Col>
+                            <Rating presentation={true} rating={cat.show_1_average_rating.show_1_rating__rating__avg}/>
+                          </Col>
+                          <Col>
+                            <Rating presentation={true} rating={cat.show_2_average_rating.show_2_rating__rating__avg}/>
+                          </Col>
+                          <Col>
+                            <p>{cat.rating_count}</p>
+                          </Col>
+                          <Col>
+                            {
+                              cat.show_1_average_rating.show_1_rating__rating__avg === cat.show_2_average_rating.show_2_rating__rating__avg
+                              ? <p>Draw</p>
+                              :
+                                <>
+                                  {
+                                    cat.show_1_average_rating.show_1_rating__rating__avg > cat.show_2_average_rating.show_2_rating__rating__avg
+                                    ? <p>{selectedSmashup.show1.name}</p>
+                                    : <p>{selectedSmashup.show2.name}</p>
+                                  }
+                                </>
+                            }
+
+                          </Col>
+                          <Col>
+                            {
+                              cat.already_rated
+                              ? <p>Already rated</p>
+                              : <a href='#' onClick={() => {showRatingBox(cat)}}>Rate</a>
+                            }
+                          </Col>
+                        </Row>
+                      ))
+                    }
+                  </>
+              }
+            </Col>
+          </Row>
+        </div>
+        : <h2>No categories exist for this smashup</h2>
+      }
       <Row>
         <Col>{errorMessage}</Col>
       </Row>

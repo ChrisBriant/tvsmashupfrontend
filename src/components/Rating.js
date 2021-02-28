@@ -23,7 +23,8 @@ const Rating = props => {
     if(props.presentation) {
       let halfStar = false;
       //console.log('RATING',props.rating, props.rating % 1);
-      if(props.rating % 1 === 0.5) {
+      console.log('CHECK RATING',props.rating % 1,props.rating )
+      if(props.rating % 1 >= 0.5) {
         halfStar =true;
       }
       let presRating = Math.floor(props.rating);
@@ -55,16 +56,18 @@ const Rating = props => {
   return (
     props.presentation
     ?
-      <div className="rating-container">
-        {
-          stars.map((star,i) => (
-            <div key={i}>
-              {star}
-            </div>
-          ))
-        }
-
-      </div>
+      <>
+        <div className="rating-container">
+          {
+            stars.map((star,i) => (
+              <div key={i}>
+                {star}
+              </div>
+            ))
+          }
+        </div>
+        <p>{props.rating}</p>
+      </>
     :
       <div className="rating-container">
         <div>

@@ -23,6 +23,9 @@ const Main = () => {
             : <UnauthNav/>
           }
         </div>
+        <footer>
+          <h1>Footer content here</h1>
+        </footer>
       </>
     )
 }
