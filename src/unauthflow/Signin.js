@@ -25,7 +25,6 @@ const Signin = (props) => {
       'email': email,
       'password': pass
     }
-    console.log('clicked',payload);
     signin(payload);
   }
 

@@ -26,3 +26,14 @@ export function isValidSmashUp(smashUp) {
     return false;
   }
 }
+
+
+export function isValidPassword(password) {
+  const regEx = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/g;
+  console.log(password,);
+  if(password.match(regEx)) {
+    return true;
+  } else {
+    return false;
+  }
+}

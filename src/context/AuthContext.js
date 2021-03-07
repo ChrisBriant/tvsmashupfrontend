@@ -7,7 +7,8 @@ const defaultState = {
   authed: false,
   token: null,
   errorMessage: '',
-  userId: null
+  userId: null,
+  regSuccess: false
 };
 
 const authReducer = (state,action) => {
@@ -29,6 +30,8 @@ const authReducer = (state,action) => {
       return {...state,userId:action.payload};
     case 'signout':
       return {token: null, errorMessage: ''};
+    case 'regSuccess':
+      return {...state, regSuccess: true};
     default:
       return defaultState;
   }
@@ -47,27 +50,18 @@ const tryLocalSignin = dispatch => async () => {
   }
 };
 
-const signup = dispatch => async ({email, password}) => {
+const register = dispatch => async ({username,email,password,passchk}) => {
     //Make api request to sign up with that email and Password
+
     try {
-      console.log(JSON.stringify({email,password}));
-      const response = await tvApi.post('/apilogin/authenticate/',
-                                          {email,password}
+      const response = await tvApi.post('/api/register/',
+                                          {username,email,password,passchk}
                         )
                         .then(res => {
-                          console.log("success",res.data.access);
+                          console.log("success",res.data);
                           //SAVE TO STORAGE
-                          localStorage.setItem("access_token", res.data.access);
-                          console.log("access", res.data.access);
-                          dispatch({type:'signin', payload:res.data.access});
-                          const decoded = decode(res.data.access);
-                          console.log(decoded);
-                          dispatch({type:'setAuthed', payload:true});
-                          dispatch({type:'setId', payload:decoded.user_id});
+                          dispatch({type:'regSuccess', payload:null});
                         });
-      // await AsyncStorage.setItem('token',response.data.access);
-      //Navigate to main flow
-      //navigate('Camera');
     } catch (err) {
       console.log(err);
       dispatch({type:'add_error', payload: 'Something went wrong with sign up'});
@@ -134,6 +128,6 @@ const signout = dispatch => async () => {
 
 export const {Provider, Context} = createDataContext (
   authReducer,
-  { signin, signout, signup, clearErrorMessage, tryLocalSignin, isAuthed},
+  { signin, signout, register, clearErrorMessage, tryLocalSignin, isAuthed},
   {...defaultState}
 );
