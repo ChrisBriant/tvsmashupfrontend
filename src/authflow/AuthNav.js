@@ -26,7 +26,7 @@ const AuthNav = (history) => {
 
   return (
     <BrowserRouter>
-      <Navbar bg="light" expand="lg">
+      <Navbar expand="lg" className="navbar-custom">
         <Navbar.Brand href="#home">TV Smashup</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
