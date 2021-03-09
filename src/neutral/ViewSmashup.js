@@ -169,10 +169,12 @@ const ViewSmashUp = () => {
       <Row>
         <Col>{successMessage}</Col>
       </Row>
+      <Spacer height="12rem" />
     </Container>
     :
     <Container>
       <Row><Col><p>No smashup is selected</p></Col></Row>
+      <Spacer height="12rem" />
     </Container>
   );
 }

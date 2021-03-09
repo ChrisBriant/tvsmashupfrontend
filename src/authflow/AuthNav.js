@@ -11,6 +11,7 @@ import AddShow from './AddShow';
 import AddSmashUp from './AddSmashUp';
 import ViewSmashUp from '../neutral/ViewSmashup';
 import SearchResults from '../neutral/SearchResults';
+import ShowIndex from '../neutral/ShowIndex';
 import ViewShow from '../neutral/ViewShow';
 import {Context} from '../context/AuthContext';
 
@@ -37,6 +38,7 @@ const AuthNav = (history) => {
             <Nav.Link href="/home">Home</Nav.Link>
             <Nav.Link href="/addshow">Add Show</Nav.Link>
             <Nav.Link href="/addsmashup">Add Smash Up</Nav.Link>
+            <Nav.Link href="/showindex">Show Index</Nav.Link>
             <Nav.Link href="#" onClick={logOut}>Logoff</Nav.Link>
           </Nav>
           <Form inline className="search-custom">
@@ -63,6 +65,9 @@ const AuthNav = (history) => {
       </Route>
       <Route path="/addsmashup">
           <AddSmashUp />
+      </Route>
+      <Route path="/showindex">
+          <ShowIndex />
       </Route>
       <Route path="/viewsmashup/:id">
           <ViewSmashUp />

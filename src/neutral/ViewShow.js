@@ -30,55 +30,56 @@ const ViewShow = (props) => {
 
   return (
     <div>
-    {
-      show
-      ? <>
-        <Row>
-          <Col><h1>{show.shows[0].name}</h1></Col>
-        </Row>
-        <Row>
-          <Col>
-            <img alt={show.shows[0].name} className='image-lg' src={BASEURL+show.shows[0].tv_image.picture} />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            {
-              show.smashups.map((smashup) => (
-                <div key={smashup.id}>
-                  <Spacer height="1rem" />
-                  <Row>
-                    <Col>
-                      <Canvas
-                        id={smashup.id}
-                        width="200"
-                        height="100"
-                        img1={BASEURL+smashup.show1.tv_image.picture}
-                        img2={BASEURL+smashup.show2.tv_image.picture}
-                      />
-                    </Col>
-                    <Col>
-                      <Row>
-                        <Col>
-                          <h4>{smashup.show1.name} Vs {smashup.show2.name}</h4>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col><p><strong>Number of categories </strong>{smashup.categories.length}</p></Col>
-                      </Row>
-                      <Row>
-                        <Col><a href="#" onClick={(e) => viewSmashUp(e,smashup.id)}>View</a></Col>
-                      </Row>
-                    </Col>
-                  </Row>
-                </div>
-              ))
-            }
-          </Col>
-        </Row>
-      </>
-      : null
-    }
+      {
+        show
+        ? <>
+          <Row>
+            <Col><h1>{show.shows[0].name}</h1></Col>
+          </Row>
+          <Row>
+            <Col>
+              <img alt={show.shows[0].name} className='image-lg' src={BASEURL+show.shows[0].tv_image.picture} />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              {
+                show.smashups.map((smashup) => (
+                  <div key={smashup.id}>
+                    <Spacer height="1rem" />
+                    <Row>
+                      <Col>
+                        <Canvas
+                          id={smashup.id}
+                          width="200"
+                          height="100"
+                          img1={BASEURL+smashup.show1.tv_image.picture}
+                          img2={BASEURL+smashup.show2.tv_image.picture}
+                        />
+                      </Col>
+                      <Col>
+                        <Row>
+                          <Col>
+                            <h4>{smashup.show1.name} Vs {smashup.show2.name}</h4>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col><p><strong>Number of categories </strong>{smashup.categories.length}</p></Col>
+                        </Row>
+                        <Row>
+                          <Col><a href="#" onClick={(e) => viewSmashUp(e,smashup.id)}>View</a></Col>
+                        </Row>
+                      </Col>
+                    </Row>
+                  </div>
+                ))
+              }
+            </Col>
+          </Row>
+        </>
+        : null
+      }
+      <Spacer height="12rem" />
     </div>
   );
 }

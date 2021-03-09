@@ -12,7 +12,9 @@ import Register from './Register';
 import SmashupList from '../neutral/SmashupList';
 import ViewSmashUp from '../neutral/ViewSmashup';
 import SearchResults from '../neutral/SearchResults';
+import ShowIndex from '../neutral/ShowIndex';
 import ViewShow from '../neutral/ViewShow';
+import {Context} from '../context/AuthContext';
 import Home from './Home';
 
 const UnauthNav = (props) => {
@@ -26,6 +28,7 @@ const UnauthNav = (props) => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link href="/home">Home</Nav.Link>
+            <Nav.Link href="/showindex">Show Index</Nav.Link>
             <Nav.Link href="/signin">Signin</Nav.Link>
             <Nav.Link href="/register">Register</Nav.Link>
           </Nav>
@@ -53,6 +56,9 @@ const UnauthNav = (props) => {
       </Route>
       <Route path="/register">
           <Register />
+      </Route>
+      <Route path="/showindex">
+          <ShowIndex />
       </Route>
       <Route path="/viewsmashup/:id">
           <ViewSmashUp />

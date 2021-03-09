@@ -13,6 +13,7 @@ const defaultState = {
   selectedSmashup: null,
   successMessage: '',
   searchResults: null,
+  showIndicies: null,
   BASEURL: 'http://localhost:8000'
 };
 
@@ -69,6 +70,8 @@ const smashUpReducer = (state,action) => {
       return{...state,searchResults:action.payload}
     case 'setCurrentShow':
       return{...state,show:action.payload}
+    case 'setShowIndicies':
+      return{...state,showIndicies:action.payload}
     case 'seCategory':
       //Slot into the selected smashup
       let newSelectedSmashup = {...state.selectedSmashup};
@@ -234,12 +237,21 @@ const searchByShowId = (dispatch) => async (id) => {
 }
 
 
+const getShowIndicies = (dispatch) => async () => {
+  const response = await tvApi.get('/api/showsindexed')
+                    .then(res => {
+                      console.log("success",res.data);
+                      dispatch({type:'setShowIndicies',payload:res.data});
+                    });
+}
+
+
 
 export const {Provider, Context} = createDataContext (
   smashUpReducer,
   { getSmashups, searchShows, setShow, clearShows, addShow, resetShowSuccess,
     createSmashup, getSmashup, resetSmashup,resetSmashups, updateCategories,
-    addRating, search, setCurrentShow, searchByShowId },
+    addRating, search, setCurrentShow, searchByShowId, getShowIndicies },
   {...defaultState}
   //{smashups: [], shows: [], show: {}, BASEURL: 'http://localhost:8000' }
 );
