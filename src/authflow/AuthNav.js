@@ -1,4 +1,4 @@
-import {useContext} from 'react';
+import {useState, useContext} from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
@@ -10,9 +10,12 @@ import SmashupList from '../neutral/SmashupList';
 import AddShow from './AddShow';
 import AddSmashUp from './AddSmashUp';
 import ViewSmashUp from '../neutral/ViewSmashup';
+import SearchResults from '../neutral/SearchResults';
+import ViewShow from '../neutral/ViewShow';
 import {Context} from '../context/AuthContext';
 
 const AuthNav = (history) => {
+  const [search,setSearch] = useState('');
   const {signout} = useContext(Context);
 
   const handleRouteChange = () => {
@@ -36,9 +39,16 @@ const AuthNav = (history) => {
             <Nav.Link href="/addsmashup">Add Smash Up</Nav.Link>
             <Nav.Link href="#" onClick={logOut}>Logoff</Nav.Link>
           </Nav>
-          <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-success">Search</Button>
+          <Form inline className="search-custom">
+            <FormControl
+              type="text"
+              placeholder="Search"
+              className="mr-sm-2"
+              onChange={(e) => {setSearch(e.target.value)}}
+            />
+            <Nav.Link href={`/search/${search}`}>
+              <Button variant="outline-success">Search</Button>
+            </Nav.Link>
           </Form>
         </Navbar.Collapse>
       </Navbar>
@@ -56,6 +66,12 @@ const AuthNav = (history) => {
       </Route>
       <Route path="/viewsmashup/:id">
           <ViewSmashUp />
+      </Route>
+      <Route path="/search/:searchStr">
+          <SearchResults />
+      </Route>
+      <Route path="/viewshow/:id">
+          <ViewShow />
       </Route>
     </BrowserRouter>
   );

@@ -12,6 +12,7 @@ import Register from './Register';
 import SmashupList from '../neutral/SmashupList';
 import ViewSmashUp from '../neutral/ViewSmashup';
 import SearchResults from '../neutral/SearchResults';
+import ViewShow from '../neutral/ViewShow';
 import Home from './Home';
 
 const UnauthNav = (props) => {
@@ -58,6 +59,9 @@ const UnauthNav = (props) => {
       </Route>
       <Route path="/search/:searchStr">
           <SearchResults />
+      </Route>
+      <Route path="/viewshow/:id">
+          <ViewShow />
       </Route>
     </BrowserRouter>
   );
