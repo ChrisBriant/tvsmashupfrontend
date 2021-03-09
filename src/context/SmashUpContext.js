@@ -11,6 +11,7 @@ const defaultState = {
   addedShow : null,
   selectedSmashup: null,
   successMessage: '',
+  searchResults: null,
   BASEURL: 'http://localhost:8000'
 };
 
@@ -63,6 +64,8 @@ const smashUpReducer = (state,action) => {
       return{...state,selectedSmashup:action.payload}
     case 'setSuccessMessage':
       return{...state,successMessage:action.payload}
+    case 'setSearchResults':
+      return{...state,searchResults:action.payload}
     case 'seCategory':
       //Slot into the selected smashup
       let newSelectedSmashup = {...state.selectedSmashup};
@@ -206,11 +209,20 @@ const addRating = (dispatch) => async (data,authed) => {
 }
 
 
+const search = (dispatch) => async (searchStr) => {
+  const response = await tvApi.get('/api/search/?search='+searchStr)
+                    .then(res => {
+                      console.log("success",res.data);
+                      dispatch({type:'setSearchResults', payload:res.data});
+                    });
+}
+
+
 export const {Provider, Context} = createDataContext (
   smashUpReducer,
   { getSmashups, searchShows, setShow, clearShows, addShow, resetShowSuccess,
     createSmashup, getSmashup, resetSmashup,resetSmashups, updateCategories,
-    addRating },
+    addRating, search },
   {...defaultState}
   //{smashups: [], shows: [], show: {}, BASEURL: 'http://localhost:8000' }
 );

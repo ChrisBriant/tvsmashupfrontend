@@ -1,3 +1,5 @@
+import {useState} from 'react';
+
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
@@ -9,9 +11,11 @@ import Signin from './Signin';
 import Register from './Register';
 import SmashupList from '../neutral/SmashupList';
 import ViewSmashUp from '../neutral/ViewSmashup';
+import SearchResults from '../neutral/SearchResults';
 import Home from './Home';
 
-const UnauthNav = () => {
+const UnauthNav = (props) => {
+  const [search,setSearch] = useState('');
 
   return (
     <BrowserRouter>
@@ -25,8 +29,15 @@ const UnauthNav = () => {
             <Nav.Link href="/register">Register</Nav.Link>
           </Nav>
           <Form inline className="search-custom">
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-success" >Search</Button>
+            <FormControl
+              type="text"
+              placeholder="Search"
+              className="mr-sm-2"
+              onChange={(e) => {setSearch(e.target.value)}}
+            />
+            <Nav.Link href={`/search/${search}`}>
+              <Button variant="outline-success">Search</Button>
+            </Nav.Link>
           </Form>
         </Navbar.Collapse>
       </Navbar>
@@ -44,6 +55,9 @@ const UnauthNav = () => {
       </Route>
       <Route path="/viewsmashup/:id">
           <ViewSmashUp />
+      </Route>
+      <Route path="/search/:searchStr">
+          <SearchResults />
       </Route>
     </BrowserRouter>
   );

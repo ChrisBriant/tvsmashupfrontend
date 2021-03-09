@@ -35,9 +35,9 @@ const SmashupList = (props) => {
       <h1>Latest Smashups</h1>
       {
         smashups.map((smashup) => (
-          <>
+          <div key={smashup.id}>
             <Spacer height="1rem" />
-            <Row key={smashup.id}>
+            <Row>
               <Col>
                 <Canvas
                   id={smashup.id}
@@ -61,7 +61,7 @@ const SmashupList = (props) => {
                 </Row>
               </Col>
             </Row>
-          </>
+          </div>
         ))
       }
     </Container>
