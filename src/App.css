@@ -67,6 +67,11 @@ h1,h2,h4 {
   height: 30vh;
 }
 
+.image-lg {
+  width: 50vh;
+  height: 50vh;
+}
+
 .add-space {
   margin: 4px;
 }

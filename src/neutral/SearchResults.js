@@ -11,7 +11,7 @@ import Col from 'react-bootstrap/Col';
 
 const SearchResults = (props) => {
   const { searchStr } = useParams();
-  const {search, state: {searchResults,BASEURL}} = useContext(Context);
+  const {search, setCurrentShow, state: {searchResults,BASEURL}} = useContext(Context);
 
 
   useEffect( () => {
@@ -27,6 +27,9 @@ const SearchResults = (props) => {
 
   const goToShow = (e,id) => {
     e.preventDefault();
+    let show = searchResults.shows.filter((show) => (show.id == id));
+    setCurrentShow(show[0]);
+    console.log('here is the show', show[0]);
     props.history.push(`/viewshow/${id}`);
   }
 

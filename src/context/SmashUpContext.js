@@ -6,6 +6,7 @@ import {multipartConn, tvApi as apiWithToken} from '../api/connections';
 const defaultState = {
   smashups: [],
   shows: [],
+  show: null,
   showVs: { show1 : {name:'', id:null}, show2 : {name:'', id:null}},
   errorMessage : '',
   addedShow : null,
@@ -66,6 +67,8 @@ const smashUpReducer = (state,action) => {
       return{...state,successMessage:action.payload}
     case 'setSearchResults':
       return{...state,searchResults:action.payload}
+    case 'setCurrentShow':
+      return{...state,show:action.payload}
     case 'seCategory':
       //Slot into the selected smashup
       let newSelectedSmashup = {...state.selectedSmashup};
@@ -217,12 +220,26 @@ const search = (dispatch) => async (searchStr) => {
                     });
 }
 
+const setCurrentShow = (dispatch) => async (show) => {
+  //NOT WORKING FOR SOME REASON
+  dispatch({type:'setShow',payload:show});
+}
+
+const searchByShowId = (dispatch) => async (id) => {
+  const response = await tvApi.get('/api/showsbyid/?id='+id)
+                    .then(res => {
+                      console.log("success",res.data);
+                      dispatch({type:'setCurrentShow',payload:res.data});
+                    });
+}
+
+
 
 export const {Provider, Context} = createDataContext (
   smashUpReducer,
   { getSmashups, searchShows, setShow, clearShows, addShow, resetShowSuccess,
     createSmashup, getSmashup, resetSmashup,resetSmashups, updateCategories,
-    addRating, search },
+    addRating, search, setCurrentShow, searchByShowId },
   {...defaultState}
   //{smashups: [], shows: [], show: {}, BASEURL: 'http://localhost:8000' }
 );

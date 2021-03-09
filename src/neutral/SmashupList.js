@@ -27,7 +27,6 @@ const SmashupList = (props) => {
     e.preventDefault();
     console.log('Smashup ID', id);
     props.history.push(`/viewsmashup/${id}`);
-
   }
 
   return (
