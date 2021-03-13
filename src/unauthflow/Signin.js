@@ -8,6 +8,7 @@ import Spacer from '../components/Spacer';
 const Signin = (props) => {
   const [email,setEmail] = useState('');
   const [pass,setPass] = useState('');
+  const [signInSuccess,setSignInSuccess] = useState(false);
   const {signin, state:{errorMessage}} = useContext(Context);
 
   console.log('SIGN IN');
@@ -20,13 +21,16 @@ const Signin = (props) => {
     setEmail(e.target.value);
   }
 
-  const handleSend = (e) => {
+  const handleSend = async (e) => {
     e.preventDefault();
     const payload = {
       'email': email,
       'password': pass
     }
-    signin(payload);
+    await signin(payload).then(msg => {
+            console.log(msg,'Sign in successful');
+          }
+    );
   }
 
   const forgotPassword = (e) => {

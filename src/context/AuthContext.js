@@ -10,7 +10,8 @@ const defaultState = {
   userId: null,
   regSuccess: false,
   setForgotSuccess: false,
-  changeSuccess: false
+  changeSuccess: false,
+  //signInSuccess: false
 };
 
 const authReducer = (state,action) => {
@@ -36,6 +37,8 @@ const authReducer = (state,action) => {
       return {...state, forgotSuccess: action.payload};
     case 'setChangeSuccess':
       return {...state, changeSuccess: action.payload};
+    // case 'setSignInSuccess':
+    //   return {...state, signInSuccess: action.payload};
     default:
       return defaultState;
   }
@@ -74,6 +77,7 @@ const register = dispatch => async ({username,email,password,passchk}) => {
 
 
 const signin = (dispatch) => async ({email, password}) => {
+  let signInSuccess;
   try {
     console.log(JSON.stringify({email,password}));
     const response = await tvApi.post('/authenticate/',
@@ -88,14 +92,18 @@ const signin = (dispatch) => async ({email, password}) => {
                         const decoded = decode(res.data.access);
                         dispatch({type:'setAuthed', payload:true});
                         dispatch({type:'setId', payload:decoded.user_id});
+                        //dispatch({type:'setSignInSuccess', payload:true});
+                        signInSuccess = true;
                       });
   } catch (err){
     console.log(err);
     dispatch({
       type: 'add_error',
       payload: 'Something went wrong with sign in'
-    })
+    });
+    signInSuccess =false;
   }
+  return signInSuccess;
 }
 
 const isAuthed = (dispatch) => () => {
