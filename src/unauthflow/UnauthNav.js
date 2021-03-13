@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import { Route, BrowserRouter } from 'react-router-dom';
 import Signin from './Signin';
 import Register from './Register';
+import ForgotPassword from './ForgotPassword';
 import SmashupList from '../neutral/SmashupList';
 import ViewSmashUp from '../neutral/ViewSmashup';
 import SearchResults from '../neutral/SearchResults';
@@ -68,6 +69,9 @@ const UnauthNav = (props) => {
       </Route>
       <Route exact path="/viewshow/:id">
           <ViewShow />
+      </Route>
+      <Route exact path="/forgotpassword/">
+          <ForgotPassword />
       </Route>
     </BrowserRouter>
   );

@@ -8,7 +8,8 @@ const defaultState = {
   token: null,
   errorMessage: '',
   userId: null,
-  regSuccess: false
+  regSuccess: false,
+  setForgotSuccess: false
 };
 
 const authReducer = (state,action) => {
@@ -21,8 +22,6 @@ const authReducer = (state,action) => {
       return {...state,authed:true};
     case 'setUnauthed':
       return {...state,authed:false};
-    // case 'isAuthed':
-    //   return {...state};
     case 'clear_error_message':
       return {...state,errorMessage:''};
     case 'setId':
@@ -32,6 +31,8 @@ const authReducer = (state,action) => {
       return {token: null, errorMessage: ''};
     case 'regSuccess':
       return {...state, regSuccess: true};
+    case 'setForgotSuccess':
+      return {...state, forgotSuccess: action.payload};
     default:
       return defaultState;
   }
@@ -126,8 +127,33 @@ const signout = dispatch => async () => {
   dispatch({type:'setId', payload:null});
 }
 
+const forgotPassword = dispatch => async (email) => {
+  dispatch({type:'setForgotSuccess', payload:true});
+
+  // try {
+  //   const response = await tvApi.post('/forgotpassword/',
+  //                                       {email}
+  //                     )
+  //                     .then(res => {
+  //                       console.log("success",res.data.access);
+  //                       dispatch({type:'setForgotSuccess', payload:null});
+  //                     });
+  // } catch (err){
+  //   console.log(err);
+  //   dispatch({
+  //     type: 'add_error', = dispatch => async (email) => {
+  //     payload: 'Password reset failed'
+  //   });
+}
+
+const resetForgotPassword  = dispatch => async (email) => {
+  dispatch({type:'setForgotSuccess', payload:false});
+}
+
 export const {Provider, Context} = createDataContext (
   authReducer,
-  { signin, signout, register, clearErrorMessage, tryLocalSignin, isAuthed},
+  { signin, signout, register, clearErrorMessage, tryLocalSignin, isAuthed,
+    forgotPassword, resetForgotPassword
+  },
   {...defaultState}
 );

@@ -1,4 +1,5 @@
 import {useContext,useState} from 'react';
+import {withRouter} from 'react-router';
 import {Context} from '../context/AuthContext';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -28,16 +29,12 @@ const Signin = (props) => {
     signin(payload);
   }
 
+  const forgotPassword = (e) => {
+    e.preventDefault();
+    props.history.push('/forgotpassword/');
+  }
+
   return (
-    // <div>
-    //   <label>Email Address:
-    //     <input id="name" type="text" value={email} onChange={handleChangeEmail} />
-    //   </label>
-    //   <label>Password:
-    //     <input id="name" type="password" value={pass} onChange={handleChangePass} />
-    //   </label>
-    //   <button id="sendname" onClick={handleSend}>Login</button>
-    // </div>
     <>
       <Spacer height="8rem" />
       <div className="panel">
@@ -55,16 +52,15 @@ const Signin = (props) => {
             <Form.Label>Password</Form.Label>
             <Form.Control type="password" placeholder="Password" onChange={handleChangePass}/>
           </Form.Group>
-          <Form.Group controlId="formBasicCheckbox">
-            <Form.Check type="checkbox" label="Check me out" />
-          </Form.Group>
           <Button variant="primary" type="submit" >
             Submit
           </Button>
+          <p>Forgot your password? Click <a href="#" onClick={forgotPassword}>here</a> to reset.</p>
         </Form>
       </div>
+      <Spacer height="8rem" />
     </>
   );
 }
 
-export default Signin;
+export default withRouter(Signin);
