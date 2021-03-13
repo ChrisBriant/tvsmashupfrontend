@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import { Route, BrowserRouter } from 'react-router-dom';
 import Signin from './Signin';
 import Register from './Register';
+import PasswordReset from './PasswordReset';
 import ForgotPassword from './ForgotPassword';
 import SmashupList from '../neutral/SmashupList';
 import ViewSmashUp from '../neutral/ViewSmashup';
@@ -72,6 +73,9 @@ const UnauthNav = (props) => {
       </Route>
       <Route exact path="/forgotpassword/">
           <ForgotPassword />
+      </Route>
+      <Route exact path="/passwordreset/:hash">
+        <PasswordReset/>
       </Route>
     </BrowserRouter>
   );

@@ -8,7 +8,7 @@ import Spacer from '../components/Spacer';
 const Signin = (props) => {
   const [email,setEmail] = useState('');
   const [pass,setPass] = useState('');
-  const {signin} = useContext(Context);
+  const {signin, state:{errorMessage}} = useContext(Context);
 
   console.log('SIGN IN');
 
@@ -57,6 +57,7 @@ const Signin = (props) => {
           </Button>
           <p>Forgot your password? Click <a href="#" onClick={forgotPassword}>here</a> to reset.</p>
         </Form>
+        <p className="error">{errorMessage}</p>
       </div>
       <Spacer height="8rem" />
     </>
