@@ -31,7 +31,7 @@ const AuthNav = (history) => {
   return (
     <BrowserRouter>
       <Navbar expand="lg" className="navbar-custom">
-        <Navbar.Brand href="#home">TV Smashup</Navbar.Brand>
+        <Navbar.Brand href="/home">TV Smashup</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
@@ -57,25 +57,25 @@ const AuthNav = (history) => {
       <Route exact path="/">
           <SmashupList />
       </Route>
-      <Route path="/home">
+      <Route exact path="/home">
           <SmashupList />
       </Route>
-      <Route path="/addshow" onChange={handleRouteChange}>
+      <Route exact path="/addshow" onChange={handleRouteChange}>
           <AddShow />
       </Route>
-      <Route path="/addsmashup">
+      <Route exact path="/addsmashup">
           <AddSmashUp />
       </Route>
-      <Route path="/showindex">
+      <Route exact path="/showindex">
           <ShowIndex />
       </Route>
-      <Route path="/viewsmashup/:id">
+      <Route exact path="/viewsmashup/:id">
           <ViewSmashUp />
       </Route>
-      <Route path="/search/:searchStr">
+      <Route exact path="/search/:searchStr">
           <SearchResults />
       </Route>
-      <Route path="/viewshow/:id">
+      <Route exact path="/viewshow/:id">
           <ViewShow />
       </Route>
     </BrowserRouter>

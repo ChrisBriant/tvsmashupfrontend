@@ -23,7 +23,7 @@ const UnauthNav = (props) => {
   return (
     <BrowserRouter>
       <Navbar expand="lg" className="navbar-custom" >
-        <Navbar.Brand href="#home">TV Smashup</Navbar.Brand>
+        <Navbar.Brand href="/home">TV Smashup</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
@@ -48,25 +48,25 @@ const UnauthNav = (props) => {
       <Route exact path="/">
           <Home />
       </Route>
-      <Route path="/home">
+      <Route exact path="/home">
           <Home />
       </Route>
       <Route exact path="/signin">
           <Signin />
       </Route>
-      <Route path="/register">
+      <Route exact path="/register">
           <Register />
       </Route>
-      <Route path="/showindex">
+      <Route exact path="/showindex">
           <ShowIndex />
       </Route>
-      <Route path="/viewsmashup/:id">
+      <Route exact path="/viewsmashup/:id">
           <ViewSmashUp />
       </Route>
-      <Route path="/search/:searchStr">
+      <Route exact path="/search/:searchStr">
           <SearchResults />
       </Route>
-      <Route path="/viewshow/:id">
+      <Route exact path="/viewshow/:id">
           <ViewShow />
       </Route>
     </BrowserRouter>

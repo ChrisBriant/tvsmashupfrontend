@@ -35,7 +35,6 @@ const smashUpReducer = (state,action) => {
     case 'setShows':
       return {...state,shows:action.payload};
     case 'setShow':
-
       newShows = state.showVs;
       newShows[`show${action.payload.vsIndex}`] = action.payload;
       //Check to see if they are different values
@@ -246,12 +245,22 @@ const getShowIndicies = (dispatch) => async () => {
 }
 
 
+const getShowsByLetter = (dispatch) => async (letter) => {
+  const response = await tvApi.get('/api/showsbyletter?letter='+letter)
+                    .then(res => {
+                      console.log("success",res.data);
+                      dispatch({type:'setShows',payload:res.data});
+                    });
+}
+
+
 
 export const {Provider, Context} = createDataContext (
   smashUpReducer,
   { getSmashups, searchShows, setShow, clearShows, addShow, resetShowSuccess,
     createSmashup, getSmashup, resetSmashup,resetSmashups, updateCategories,
-    addRating, search, setCurrentShow, searchByShowId, getShowIndicies },
+    addRating, search, setCurrentShow, searchByShowId, getShowIndicies,
+    getShowsByLetter},
   {...defaultState}
   //{smashups: [], shows: [], show: {}, BASEURL: 'http://localhost:8000' }
 );
