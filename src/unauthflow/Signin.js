@@ -27,8 +27,10 @@ const Signin = (props) => {
       'email': email,
       'password': pass
     }
-    await signin(payload).then(msg => {
-            console.log(msg,'Sign in successful');
+    await signin(payload).then(success => {
+            if(success) {
+              props.history.push('/home');
+            }
           }
     );
   }

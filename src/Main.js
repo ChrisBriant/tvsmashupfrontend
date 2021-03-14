@@ -13,8 +13,6 @@ const Main = () => {
     },[]);
 
 
-    console.log(authed);
-
     return (
       <>
         <div className="main">
