@@ -30,9 +30,8 @@ const ShowIndex = (props) => {
   return (
     <>
       <Spacer height="1rem" />
-      <h1>Index of Shows</h1>
-      <Spacer height="1rem" />
       <div className="panel">
+        <h1>Index of Shows</h1>
         {
           showIndicies
           ? <>

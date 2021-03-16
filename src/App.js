@@ -3,7 +3,7 @@ import './App.css';
 import {Provider as AuthProvider} from './context/AuthContext';
 import {Provider as SmashUpProvider} from './context/SmashUpContext';
 import {Provider as UIControlProvider} from './context/UIControlContext';
-import Main from './Main';
+import Main from './neutral/Main';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {

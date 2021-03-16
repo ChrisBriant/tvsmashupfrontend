@@ -30,7 +30,7 @@ const SmashupList = (props) => {
   }
 
   return (
-    <Container>
+    <Container className="panel">
       <h1>Latest Smashups</h1>
       {
         smashups.map((smashup) => (
