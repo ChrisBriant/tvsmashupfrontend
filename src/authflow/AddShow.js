@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/Button';
 
 import {isFileTypeValid} from '../helpers/validation';
 import {Context} from '../context/SmashUpContext';
+import Spacer from '../components/Spacer';
 
 
 
@@ -68,79 +69,83 @@ const AddShow = () => {
 
 
   return (
-    <Container>
-    <Row>
-      <Col><h1>Add New Show</h1></Col>
-    </Row>
-    {
-      addedShow
-      ?
-        <>
-          <Row>
-            <Col>
-              <p>{addedShow.message}</p>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Button onClick={resetShowScreen}>Add Another</Button>
-            </Col>
-          </Row>
-        </>
-      :
-        <>
-          <Row>
-            <Col>
-              <InputGroup className="mb-3">
-                <InputGroup.Prepend>
-                  <InputGroup.Text id="basic-addon1">Show</InputGroup.Text>
-                </InputGroup.Prepend>
-                <FormControl
-                  placeholder="Enter the name of a TV show"
-                  aria-label="show"
-                  aria-describedby="basic-addon1"
-                  onChange={handleChangeShow}
-                />
-              </InputGroup>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <input type="file" onChange={onFileSelected} />
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              {
-                imgSrc !== ''
-                ? <img className="show-select-img" src={imgSrc} />
-                : null
-              }
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Button onClick={handleAddShow}>Add Show</Button>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              {
-                errMessage
-                ? <p className="error">{errMessage}</p>
-                : null
-              }
-              {
-                errorMessage
-                ? <p className="error">{errorMessage}</p>
-                : null
-              }
-            </Col>
-          </Row>
-        </>
-    }
-
-    </Container>
+    <>
+      <Spacer height="1rem" />
+      <Container className="panel">
+        <Row>
+          <Col><h1>Add New Show</h1></Col>
+        </Row>
+        {
+          addedShow
+          ?
+            <>
+              <Row>
+                <Col>
+                  <p>{addedShow.message}</p>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Button onClick={resetShowScreen}>Add Another</Button>
+                </Col>
+              </Row>
+            </>
+          :
+            <>
+              <Row>
+                <Col>
+                  <InputGroup className="mb-3">
+                    <InputGroup.Prepend>
+                      <InputGroup.Text id="basic-addon1">Show</InputGroup.Text>
+                    </InputGroup.Prepend>
+                    <FormControl
+                      placeholder="Enter the name of a TV show"
+                      aria-label="show"
+                      aria-describedby="basic-addon1"
+                      onChange={handleChangeShow}
+                    />
+                  </InputGroup>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <input type="file" onChange={onFileSelected} />
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  {
+                    imgSrc !== ''
+                    ? <img className="show-select-img" src={imgSrc} />
+                    : null
+                  }
+                </Col>
+              </Row>
+              <Spacer height="1rem" />
+              <Row>
+                <Col>
+                  <Button onClick={handleAddShow}>Add Show</Button>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  {
+                    errMessage
+                    ? <p className="error">{errMessage}</p>
+                    : null
+                  }
+                  {
+                    errorMessage
+                    ? <p className="error">{errorMessage}</p>
+                    : null
+                  }
+                </Col>
+              </Row>
+            </>
+        }
+      </Container>
+      <Spacer height="1rem" />
+    </>
   );
 }
 

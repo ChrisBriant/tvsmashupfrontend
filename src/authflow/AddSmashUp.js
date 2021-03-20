@@ -1,4 +1,5 @@
 import {useState, useContext} from 'react';
+import {withRouter} from 'react-router';
 import AutoComplete from '../components/AutoComplete';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -9,10 +10,13 @@ import {Context} from '../context/SmashUpContext';
 import {Context as UIContext} from '../context/UIControlContext';
 import CategoryInput from '../components/CategoryInput';
 import {isValidSmashUp} from '../helpers/validation';
+import Spacer from '../components/Spacer';
 
-const AddSmashup = () => {
+const AddSmashup = (props) => {
   const {createSmashup, state: {showVs, errorMessage}} = useContext(Context);
   const {state: {catList}} = useContext(UIContext);
+  const [newId,setNewId] = useState(0);
+  const [newCreated,setNewCreated] = useState(true);
 
   console.log('CAT LIST',catList);
 
@@ -24,81 +28,130 @@ const AddSmashup = () => {
         categories: catList
     }
     if (isValidSmashUp(payload)) {
-      createSmashup(payload);
+      await createSmashup(payload).then(success => {
+        console.log('PROMISE', success);
+        if(success.created) {
+          console.log('creation success', success);
+          setNewId(success.id);
+          setNewCreated(true);
+        }
+      });
     }
     //createSmashup();
   }
 
+  const goToSmashup = () => {
+    props.history.push('/viewsmashup/'+newId);
+  }
+
   return (
-    <Container>
-      <Row>
-        <Col>
-          <h1>Add a New Smashup</h1>
-        </Col>
-      </Row>
-      <Row>
-        <Col><h2>{showVs.show1.name}</h2></Col><Col><h2>Vs</h2></Col><Col><h2>{showVs.show2.name}</h2></Col>
-      </Row>
-      <Row>
-        <Col>
-          <AutoComplete
-            label="First Show"
-            placeholder="Start typing the name of a show"
-            ariaLabel="First Show"
-            shownumber={1}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <AutoComplete
-            label="Second Show"
-            placeholder="Start typing the name of a show"
-            ariaLabel="Second Show"
-            shownumber={2}
-          />
-        </Col>
-      </Row>
+    <>
       {
-        showVs.show1.name !== '' && showVs.show2.name !== ''
-        ?
-          <>
+        newCreated
+        ? <>
+          <Spacer height="1rem" />
+          <Container className="panel">
             <Row>
               <Col>
-                <h2>Add Categories</h2>
-                <p>Add categories below to judge your two shows. People can view these
-                categories and rate them. This will determine which show wins based on your
-                chosen categories.</p>
+                <h1>Add a New Smashup</h1>
+              </Col>
+            </Row>
+            <Spacer height="1rem" />
+            <Row>
+              <Col md="1"></Col>
+              <Col md="10"><h2>Successfully Added New Smashup</h2></Col>
+              <Col md="1"></Col>
+            </Row>
+            <Spacer height="1rem" />
+            <Row>
+              <Col md="2"></Col>
+              <Col md="4">
+                <Button onClick={() => {setNewCreated(false)}}>Add Another</Button>
+              </Col>
+              <Col md="4">
+                <Button onClick={goToSmashup}>View Smashup</Button>
+              </Col>
+              <Col md="2"></Col>
+            </Row>
+            <Spacer height="1rem" />
+          </Container>
+          <Spacer height="1rem" />
+        </>
+        : <>
+          <Spacer height="1rem" />
+          <Container className="panel">
+            <Row>
+              <Col>
+                <h1>Add a New Smashup</h1>
               </Col>
             </Row>
             <Row>
-              <Col md={4}>
-                <p>Examples: </p>
-                <ul>
-                  <li>Best lead actor</li>
-                  <li>Strongest plot</li>
-                  <li>Replay value</li>
-                </ul>
-              </Col>
-              <Col md={8}>
-                <CategoryInput />
+              <Col><h2>{showVs.show1.name}</h2></Col><Col><h2>Vs</h2></Col><Col><h2>{showVs.show2.name}</h2></Col>
+            </Row>
+            <Row>
+              <Col>
+                <AutoComplete
+                  label="First Show"
+                  placeholder="Start typing the name of a show"
+                  ariaLabel="First Show"
+                  shownumber={1}
+                />
               </Col>
             </Row>
-          </>
-        : null
+            <Row>
+              <Col>
+                <AutoComplete
+                  label="Second Show"
+                  placeholder="Start typing the name of a show"
+                  ariaLabel="Second Show"
+                  shownumber={2}
+                />
+              </Col>
+            </Row>
+            {
+              showVs.show1.name !== '' && showVs.show2.name !== ''
+              ?
+                <>
+                  <Row>
+                    <Col>
+                      <h2>Add Categories</h2>
+                      <p>Add categories below to judge your two shows. People can view these
+                      categories and rate them. This will determine which show wins based on your
+                      chosen categories.</p>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md={4}>
+                      <p>Examples: </p>
+                      <ul>
+                        <li>Best lead actor</li>
+                        <li>Strongest plot</li>
+                        <li>Replay value</li>
+                      </ul>
+                    </Col>
+                    <Col md={8}>
+                      <CategoryInput />
+                    </Col>
+                  </Row>
+                </>
+              : null
+            }
+            <Row>
+              <Col>
+                <Button onClick={submitSmashup}>Create Smashup</Button>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <p className="error">{errorMessage}</p>
+              </Col>
+            </Row>
+          </Container>
+          <Spacer height="1rem" />
+        </>
       }
-      <Row>
-        <Col>
-          <Button onClick={submitSmashup}>Create Smashup</Button>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <p className="error">{errorMessage}</p>
-        </Col>
-      </Row>
-    </Container>
+    </>
   );
 }
 
-export default AddSmashup;
+export default withRouter(AddSmashup);

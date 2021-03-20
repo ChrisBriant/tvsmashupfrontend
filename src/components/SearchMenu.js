@@ -25,7 +25,7 @@ const SearchMenu = props => {
             <p>Pick a Show</p>
             {
               shows.map((show) => (
-                <a key={show.id} id={show.id} href="#" onClick={clickShow}>{show.name}</a>
+                <p><a key={show.id} id={show.id} href="#" onClick={clickShow}>{show.name}</a></p>
               ))
             }
           </div>

@@ -65,41 +65,47 @@ const RatingModal = props => {
 
   return (
     <>
-      <Modal show={props.show} onHide={resetRatingsAndToggle}>
-        <Modal.Header closeButton>
-          <Modal.Title>{props.selectedCategory.category}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Container>
-            <Row>
-              <Col><p>Rate the two shows against each other!</p></Col>
-            </Row>
-            <Row>
-              <Col>
-                <Row><Col>{props.show1.name}</Col></Row>
-              </Col>
-              <Col>
-                <Row><Col><Rating id={props.show1.id} updateRating={updateRating}/></Col></Row>
-              </Col>
-              <Col><h2>Vs</h2></Col>
-              <Col>
-                <Row><Col>{props.show2.name}</Col></Row>
-              </Col>
-              <Col>
-                <Row><Col><Rating id={props.show2.id} updateRating={updateRating}/></Col></Row>
-              </Col>
-            </Row>
-          </Container>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={resetRatingsAndToggle}>
-            Cancel
-          </Button>
-          <Button onClick={handleSaveRating}>
-            Rate
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <div className="modal-80w">
+        <Modal
+          show={props.show}
+          onHide={resetRatingsAndToggle}
+          dialogClassName="modal-80w"
+          >
+          <Modal.Header closeButton>
+            <Modal.Title>{props.selectedCategory.category}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Container>
+              <Row>
+                <Col><p>Rate the two shows against each other!</p></Col>
+              </Row>
+              <Row>
+                <Col md="3">
+                  <Row><Col>{props.show1.name}</Col></Row>
+                </Col>
+                <Col md="2">
+                  <Row><Col><Rating id={props.show1.id} updateRating={updateRating}/></Col></Row>
+                </Col>
+                <Col md="2"><h2>Vs</h2></Col>
+                <Col md="3">
+                  <Row><Col>{props.show2.name}</Col></Row>
+                </Col>
+                <Col md="2">
+                  <Row><Col><Rating id={props.show2.id} updateRating={updateRating}/></Col></Row>
+                </Col>
+              </Row>
+            </Container>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={resetRatingsAndToggle}>
+              Cancel
+            </Button>
+            <Button onClick={handleSaveRating}>
+              Rate
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
     </>
   );
 }

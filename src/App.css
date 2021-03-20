@@ -160,3 +160,9 @@ footer {
   min-height:10vh;
   background-color: #ffce89;
 }
+
+/***********************modals******************************************/
+
+.modal-80w {
+  min-width:80%;
+}

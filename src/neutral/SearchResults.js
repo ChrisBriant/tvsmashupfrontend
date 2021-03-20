@@ -36,7 +36,8 @@ const SearchResults = (props) => {
 
   return (
     <>
-      <Container>
+      <Spacer height="1rem" />
+      <Container className="panel">
         <Row><Col><h1>Search Results</h1></Col></Row>
         <Row>
           <Col>
@@ -117,7 +118,7 @@ const SearchResults = (props) => {
           </Col>
         </Row>
       </Container>
-      <Spacer height="12rem" />
+      <Spacer height="1rem" />
     </>
 
   );

@@ -66,7 +66,13 @@ const Rating = props => {
             ))
           }
         </div>
-        <p>{props.rating}</p>
+        <p>
+          {
+            props.rating
+            ? parseFloat(props.rating).toFixed(1)
+            : "Not Rated"
+          }
+        </p>
       </>
     :
       <div className="rating-container">

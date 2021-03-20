@@ -71,7 +71,7 @@ const smashUpReducer = (state,action) => {
       return{...state,show:action.payload}
     case 'setShowIndicies':
       return{...state,showIndicies:action.payload}
-    case 'seCategory':
+    case 'setCategory':
       //Slot into the selected smashup
       let newSelectedSmashup = {...state.selectedSmashup};
       let catIndex = newSelectedSmashup.categories.find(cat => cat.id === action.payload.category.id);
@@ -102,10 +102,12 @@ const searchShows = (dispatch) => async (searchStr) => {
 
 const createSmashup = (dispatch) => async (data) => {
   console.log('Sending ',data);
+  let success = {created:false,id:0};
   const response = await apiWithToken.post('/api/addsmashup/',data)
                     .then(res => {
                       console.log("success",res.data);
                       dispatch({type:'setSmashup', payload:res.data});
+                      success = {created:true,id:res.data.id};
                     }).catch(err => {
                         console.log('I am err', err.response.status);
                         if(err.response.status === 400) {
@@ -114,7 +116,9 @@ const createSmashup = (dispatch) => async (data) => {
                         } else if(err.response.status === 401) {
                           dispatch({type:'sendError', payload:'You are not authorised to perform this action'});
                        }
+                       success = {created:false,id:0};
                     });
+  return success;
 }
 
 
