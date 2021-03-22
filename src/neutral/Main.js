@@ -21,7 +21,7 @@ import ForgotPassword from '../unauthflow/ForgotPassword';
 import {Context} from '../context/AuthContext';
 
 const Main = () => {
-    const {isAuthed,signout, state:{authed}} = useContext(Context);
+    const {isAuthed,signout, state:{authed,isAdmin}} = useContext(Context);
     const [search,setSearch] = useState('');
     //const [authed,setAuthed] = useState(false);
 
@@ -33,6 +33,7 @@ const Main = () => {
 
     useEffect(() => {
       isAuthed();
+      console.log('Am I an admin?',isAdmin);
     },[]);
 
 
@@ -50,7 +51,10 @@ const Main = () => {
                   {
                     authed
                     ? <>
-                      <Nav.Link href="/addshow">Add Show</Nav.Link>
+                      { isAdmin
+                        ? <Nav.Link href="/addshow">Add Show</Nav.Link>
+                        : null
+                      }
                       <Nav.Link href="/addsmashup">Add Smash Up</Nav.Link>
                       <Nav.Link href="/home" onClick={logOut}>Logoff</Nav.Link>
                     </>
@@ -82,9 +86,13 @@ const Main = () => {
             {
               authed
               ? <>
-                <Route exact path="/addshow">
-                    <AddShow />
-                </Route>
+                {
+                  isAdmin
+                  ? <Route exact path="/addshow">
+                        <AddShow />
+                    </Route>
+                  : null
+                }
                 <Route exact path="/addsmashup">
                     <AddSmashUp />
                 </Route>

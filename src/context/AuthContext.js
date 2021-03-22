@@ -8,6 +8,7 @@ const defaultState = {
   token: null,
   errorMessage: '',
   userId: null,
+  isAdmin: false,
   regSuccess: false,
   setForgotSuccess: false,
   changeSuccess: false,
@@ -29,6 +30,9 @@ const authReducer = (state,action) => {
     case 'setId':
       console.log('Setting ID', action.payload);
       return {...state,userId:action.payload};
+    case 'setIsAdmin':
+      console.log('Setting Admin', action.payload);
+      return {...state,isAdmin:action.payload};
     case 'signout':
       return {token: null, errorMessage: ''};
     case 'regSuccess':
@@ -92,6 +96,8 @@ const signin = (dispatch) => async ({email, password}) => {
                         const decoded = decode(res.data.access);
                         dispatch({type:'setAuthed', payload:true});
                         dispatch({type:'setId', payload:decoded.user_id});
+                        dispatch({type:'setIsAdmin', payload:decoded.is_admin});
+                        console.log("USER IS SIGNED IN", decoded);
                         //dispatch({type:'setSignInSuccess', payload:true});
                         signInSuccess = true;
                       });
