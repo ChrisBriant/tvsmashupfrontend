@@ -1,10 +1,12 @@
 import {useContext} from 'react';
 import {Context} from '../context/SmashUpContext';
 import {Context as UIContext} from '../context/UIControlContext';
+import {Context as AuthContext} from '../context/AuthContext';
 
 const SearchMenu = props => {
   const {setShow, clearShows, state: {shows}} = useContext(Context);
   const {state:{focusedVsInput}} = useContext(UIContext);
+  const {state:{isAdmin}} = useContext(AuthContext);
 
   const clickShow = (e) => {
     console.log('Clickety');
@@ -15,6 +17,7 @@ const SearchMenu = props => {
   }
 
   console.log("ACTIVE", focusedVsInput);
+  console.log("AM I ADMIN", isAdmin);
 
 
   return (
@@ -29,9 +32,19 @@ const SearchMenu = props => {
               ))
             }
           </div>
-        : <div>
-          
-        </div>
+        : <> {
+            focusedVsInput === props.shownumber
+            ?
+              <div className="search_menu">
+                <p>There are no shows in existance.</p>
+                {
+                  !isAdmin
+                  ? <p>Sorry only administrators can create shows.</p>
+                  : <p>Click <a href="/addsmashup">here</a> to add a show.</p>
+                }
+              </div>
+            : null
+        } </>
       }
     </>
   )

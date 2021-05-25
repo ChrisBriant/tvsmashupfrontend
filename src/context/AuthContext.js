@@ -124,6 +124,7 @@ const isAuthed = (dispatch) => () => {
       return false;
     } else {
       dispatch({type:'setAuthed', payload:true});
+      dispatch({type:'setIsAdmin', payload:decoded.is_admin});
       dispatch({type:'setId', payload:decoded.user_id});
       return true;
     }
@@ -136,6 +137,7 @@ const isAuthed = (dispatch) => () => {
     return false;
   }
 }
+
 
 
 const signout = dispatch => async () => {

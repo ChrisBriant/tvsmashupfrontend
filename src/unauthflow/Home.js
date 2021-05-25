@@ -5,7 +5,9 @@ import SmashupList from '../neutral/SmashupList';
 import {Context} from '../context/AuthContext';
 
 const Home = () => {
-  const {state:{authed}} = useContext(Context);
+  const {state:{authed,isAdmin}} = useContext(Context);
+
+  console.log("HOME PAGE - ADMIN?", isAdmin);
 
   return (
     <>
