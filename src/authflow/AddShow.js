@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import {isFileTypeValid} from '../helpers/validation';
 import {Context} from '../context/SmashUpContext';
 import Spacer from '../components/Spacer';
+import { BsTypeStrikethrough } from 'react-icons/bs';
 
 
 
@@ -25,7 +26,7 @@ const AddShow = () => {
   },[]);
 
   const handleChangeShow = (e) => {
-    setShow(e.target.value);
+    setShow(e.target.value)
   }
 
   const onFileSelected = (e) => {
@@ -57,7 +58,7 @@ const AddShow = () => {
           let ext = blob.type.split('/')[1];
           const file = new File([blob], `filename.${ext}`);
           fd.append('picture', file);
-    });
+      });
     console.log(fd.values());
     addShow(fd);
   }

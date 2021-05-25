@@ -164,8 +164,10 @@ const addShow = (dispatch) => async (formData) => {
               console.log('I am err', err.response.status);
               if(err.response.status === 401) {
                 dispatch({type:'sendError', payload:'You are not authorised to perform this action'});
+              } else if(err.response.status == 400) {
+                dispatch({type:'sendError', payload:`Something went wrong creating the show, please check 
+                the file is one of the allowed types (PNG, JPEG, JPG)`});
               }
-
           });
 }
 

@@ -36,11 +36,11 @@ const SearchMenu = props => {
             focusedVsInput === props.shownumber
             ?
               <div className="search_menu">
-                <p>There are no shows in existance.</p>
+                <p>No shows exist for this search.</p>
                 {
                   !isAdmin
                   ? <p>Sorry only administrators can create shows.</p>
-                  : <p>Click <a href="/addsmashup">here</a> to add a show.</p>
+                  : <p>Click <a href="/addshow">here</a> to add a show.</p>
                 }
               </div>
             : null
