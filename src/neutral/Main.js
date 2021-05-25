@@ -18,6 +18,7 @@ import Register from '../unauthflow/Register';
 import Home from '../unauthflow/Home';
 import PasswordReset from '../unauthflow/PasswordReset';
 import ForgotPassword from '../unauthflow/ForgotPassword';
+import Spacer from '../components/Spacer';
 import {Context} from '../context/AuthContext';
 
 const Main = () => {
@@ -126,10 +127,11 @@ const Main = () => {
             </Route>
           </BrowserRouter>
         </div>
-
+        
+        <Spacer height="1rem" />
 
         <footer>
-          <h1>Footer content here</h1>
+          <p>TV SmashUp App by <a href="https://github.com/ChrisBriant/tvsmashupfrontend" target="_blank">Chris Briant</a></p>
         </footer>
       </>
     )

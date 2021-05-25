@@ -47,7 +47,7 @@ const AddSmashup = (props) => {
   return (
     <>
       {
-        newCreated
+        !newCreated
         ? <>
           <Spacer height="1rem" />
           <Container className="panel">

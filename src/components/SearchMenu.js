@@ -29,7 +29,9 @@ const SearchMenu = props => {
               ))
             }
           </div>
-        : null
+        : <div>
+          
+        </div>
       }
     </>
   )

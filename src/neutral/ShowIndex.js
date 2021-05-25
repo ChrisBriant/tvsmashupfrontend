@@ -1,6 +1,7 @@
 import {useContext,useEffect,useState} from 'react';
 import {withRouter} from 'react-router';
 import {Context} from '../context/SmashUpContext';
+import {Context as AuthContext} from '../context/AuthContext';
 import Spacer from '../components/Spacer';
 
 
@@ -11,6 +12,7 @@ import Col from 'react-bootstrap/Col';
 
 const ShowIndex = (props) => {
   const {getShowIndicies, getShowsByLetter, state: {shows,showIndicies}} = useContext(Context);
+  const {state:{authed}} = useContext(AuthContext);
   const [letter,setLetter] = useState('');
 
   useEffect( () => {
@@ -33,7 +35,7 @@ const ShowIndex = (props) => {
       <div className="panel">
         <h1>Index of Shows</h1>
         {
-          showIndicies
+          showIndicies && showIndicies.length > 0
           ? <>
             {
               showIndicies.map((idx) => (
@@ -67,7 +69,16 @@ const ShowIndex = (props) => {
             }
           </>
           : <>
-            <h2>There are no shows to show!</h2>
+            <h4>There are no smashups to view, be the first to add one!</h4>
+            <Spacer height="1rem" />
+              { authed
+                ? <><h4>Add your <a href="/addsmashup">first SmashUp.</a></h4></>
+                : <> 
+                    <h4>Register <a href="/register">here</a> to get started.</h4>
+                    <Spacer height="1rem" />
+                    <h4>Already have an account? Click <a href="/signin">here</a> to sign in.</h4>
+                  </> 
+              } 
           </>
         }
       </div>

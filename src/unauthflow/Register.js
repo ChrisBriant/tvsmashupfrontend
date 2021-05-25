@@ -110,7 +110,7 @@ const Register = () => {
           <div className="panel">
             <h2>Register</h2>
             <p>Congratulations! You have successfully registered. Please check your email for a link to confirm your account.
-              Once you have done that click on &quot;Signin&quot; to log in.</p>
+              Once you have done that click on <a href="signin"> Signin</a> to log in.</p>
           </div>
           <Spacer height="12rem" />
         </>
