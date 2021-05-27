@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import {Context} from '../context/SmashUpContext';
 import {Context as UIContext} from '../context/UIControlContext';
 import CategoryInput from '../components/CategoryInput';
+import MessageModal from '../components/MessageModal';
 import {isValidSmashUp} from '../helpers/validation';
 import Spacer from '../components/Spacer';
 
@@ -17,6 +18,7 @@ const AddSmashup = (props) => {
   const {state: {catList}} = useContext(UIContext);
   const [newId,setNewId] = useState(0);
   const [newCreated,setNewCreated] = useState(true);
+  const [success,setSuccess] = useState(false);
 
   console.log('CAT LIST',catList);
 
@@ -34,10 +36,10 @@ const AddSmashup = (props) => {
           console.log('creation success', success);
           setNewId(success.id);
           setNewCreated(true);
+          setSuccess(success.created);
         }
       });
     }
-    //createSmashup();
   }
 
   const goToSmashup = () => {
@@ -46,6 +48,15 @@ const AddSmashup = (props) => {
 
   return (
     <>
+      {
+        success
+        ? <MessageModal
+          show={success}
+          title="Success"
+          message="Smashup has successfully been added."
+        />
+        : null
+      }
       {
         !newCreated
         ? <>

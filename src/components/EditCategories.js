@@ -83,7 +83,7 @@ const EditCategories = props => {
       <Row>
         <Col>
           {
-            addAnother
+            addAnother || categories.length === 0
             ?
               <Row>
                 <Col>

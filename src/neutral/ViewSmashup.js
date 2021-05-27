@@ -21,6 +21,7 @@ const ViewSmashUp = () => {
   const {addToCatList, removeFromCatList, state:{catList}} = useContext(Context);
 
   const [editMode, setEditMode] = useState(false);
+  const [addMode, setAddMode] = useState(false);
   const [selectedCategory,setSelectedCategory] = useState({})
   const [showRatingModal, setShowRatingModal] = useState(false);
   console.log('Selected smashup', selectedSmashup);
@@ -165,7 +166,28 @@ const ViewSmashUp = () => {
               </Col>
             </Row>
           </div>
-          : <h2>No categories exist for this smashup</h2>
+          : <>  
+              <Row><Col><h2>No categories exist for this smashup</h2></Col></Row> 
+              <Row>
+                  <Col><Button onClick={() => setAddMode(!addMode)}>{addMode ? "Cancel" : "Add Categories"  }</Button></Col>
+              </Row>
+              {
+                addMode
+                ? <>
+                  <Row>
+                    <Col>
+                      <Spacer height="1rem"/>
+                      <EditCategories
+                              categories={selectedSmashup.categories}
+                              smashupId={selectedSmashup.id}
+                              setUpdated={setUpdated}
+                              />
+                    </Col>
+                  </Row>
+                </>
+                : null
+              }
+            </>
         }
         <Spacer height="1rem" />
         <Row>
