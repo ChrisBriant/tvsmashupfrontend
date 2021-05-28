@@ -7,7 +7,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import {Context as SmashupContext} from '../context/SmashUpContext';
-import {Context} from '../context/UIControlContext';
 import Spacer from './Spacer';
 
 
@@ -23,26 +22,12 @@ const EditCategories = props => {
     setCategories(props.categories);
   },[]);
 
-  console.log(categories);
-
-  const handleChange = (e) => {
-    let newCategory = categories.filter(cat => cat.id === parseInt(e.target.id));
-    newCategory[0].category = e.target.value;
-    console.log('Changing', newCategory[0] );
-    let newCategories = [...categories]
-    let idx = newCategories.findIndex(cat => cat.id === parseInt(e.target.id));
-    newCategories[idx] = newCategory[0];
-
-    setCategories(newCategories);
-    console.log('These are the new categories',newCategories);
-  }
 
   const handleChangeName = (e) => {
     setNewCategory(e.target.value);
   }
 
   const removeCategory = (idx) => {
-    console.log(idx);
     let newCategories = [...categories];
     newCategories.splice(idx,1);
     setCategories(newCategories);
@@ -50,7 +35,6 @@ const EditCategories = props => {
   }
 
   const addCategory = () => {
-    console.log('Adding');
     let newCat = {
       already_rated: true,
       average_rating: { rating__avg: 0 },

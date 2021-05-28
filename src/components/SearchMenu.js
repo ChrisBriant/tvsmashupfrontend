@@ -9,16 +9,11 @@ const SearchMenu = props => {
   const {state:{isAdmin}} = useContext(AuthContext);
 
   const clickShow = (e) => {
-    console.log('Clickety');
     let selectedShow = shows.filter((s) => (s.id === parseInt(e.target.id)))[0];
     selectedShow.vsIndex=props.shownumber;
     setShow(selectedShow);
     clearShows();
   }
-
-  console.log("ACTIVE", focusedVsInput);
-  console.log("AM I ADMIN", isAdmin);
-
 
   return (
     <>

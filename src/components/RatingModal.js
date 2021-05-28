@@ -10,7 +10,6 @@ import {Context} from '../context/SmashUpContext';
 import {Context as AuthContext} from '../context/AuthContext';
 
 const RatingModal = props => {
-  const [show, setShow] = useState(false);
   const [showRatings,setShowRatings] = useState({
     show_1 : null,
     show_2 : null
@@ -26,9 +25,6 @@ const RatingModal = props => {
     props.toggle();
   }
 
-  //const handleClose = () => setShow(false);
-  //const handleShow = () => setShow(true);
-
   const handleSaveRating = () => {
     let newShowRatings = {...showRatings}
     //Set default rating to one star if not set
@@ -43,7 +39,6 @@ const RatingModal = props => {
       id: props.selectedCategory.id,
       ...newShowRatings
     }
-    console.log('RATING PAYLOAD', payload);
     addRating(payload,authed);
     resetRatingsAndToggle();
   }
@@ -51,7 +46,6 @@ const RatingModal = props => {
 
 
   const updateRating = (id,rating) => {
-    console.log('UPDATE RATING', id, rating);
     let newShowRatings = {...showRatings};
     if(props.show1.id === id) {
       newShowRatings.show_1 = {id: id, rating: rating};
@@ -61,7 +55,6 @@ const RatingModal = props => {
     setShowRatings(newShowRatings);
   }
 
-  console.log('CATEGORY', props.selectedCategory);
 
   return (
     <>

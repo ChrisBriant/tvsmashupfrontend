@@ -4,7 +4,6 @@ import {Context} from '../context/SmashUpContext';
 import Canvas from '../components/Canvas';
 import Spacer from '../components/Spacer';
 
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
@@ -13,17 +12,12 @@ const ViewShow = (props) => {
   const { id } = useParams();
   const {searchByShowId,setCurrentShow, state: {show,smashups,BASEURL}} = useContext(Context);
 
-  //// TODO: Display TV Show detail and Get the smashups by TV show
-  //const {getSmashupsByShow, state: {searchResults,BASEURL}} = useContext(Context);
-
   useEffect( () => {
     searchByShowId(id);
-    console.log('Here', show);
   },[]);
 
   const viewSmashUp = (e,id) => {
     e.preventDefault();
-    console.log('Smashup ID', id);
     props.history.push(`/viewsmashup/${id}`);
   }
 

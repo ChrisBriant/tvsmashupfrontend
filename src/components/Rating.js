@@ -1,4 +1,3 @@
-//https://react-icons.github.io/react-icons/icons?name=bs
 import { useState, useEffect } from 'react';
 import { BsStarFill } from "react-icons/bs";
 import { BsStar } from "react-icons/bs";
@@ -9,21 +8,12 @@ import { BsStarHalf } from "react-icons/bs";
 const Rating = props => {
   const starColor = {color:'#b88130'};
   const [rating,setRating] = useState(1);
-  //const [id,setId] = useState(0);
-  //const [halfStar,setHalfStar] = useState(false);
   const [stars,setStars] = useState([]);
 
 
   useEffect(() => {
-    //if(props.id) {
-      //setId(props.id);
-    //}
-    //If component is in presntation mode then the code
-    // below is used to determine half star
     if(props.presentation) {
       let halfStar = false;
-      //console.log('RATING',props.rating, props.rating % 1);
-      console.log('CHECK RATING',props.rating % 1,props.rating )
       if(props.rating % 1 >= 0.5) {
         halfStar =true;
       }
@@ -43,7 +33,6 @@ const Rating = props => {
         }
       }
       setStars(components);
-      console.log('components are', components);
     }
   },[]);
 
@@ -114,6 +103,5 @@ const Rating = props => {
       </div>
   )
 }
-
 
 export default Rating;

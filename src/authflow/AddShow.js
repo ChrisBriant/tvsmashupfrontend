@@ -21,7 +21,6 @@ const AddShow = () => {
   const {addShow, resetShowSuccess, state:{errorMessage, addedShow}} = useContext(Context);
 
   useEffect(() => {
-    console.log('RESETTING');
     resetShowSuccess();
   },[]);
 
@@ -33,8 +32,6 @@ const AddShow = () => {
     let image = e.target.files[0];
     setErrorMessage('');
 
-    //files = filesCopy;
-    console.log(isFileTypeValid(image));
     if(isFileTypeValid(image)) {
         let reader = new FileReader();
             reader.readAsDataURL(image);
@@ -48,18 +45,15 @@ const AddShow = () => {
 
 
   const handleAddShow = async () => {
-    console.log('IMAGE SRC', imgSrc);
     const fd = new FormData();
     fd.append('name',show);
     await fetch(imgSrc)
       .then(res => res.blob())
       .then(blob => {
-          console.log('Here I am');
           let ext = blob.type.split('/')[1];
           const file = new File([blob], `filename.${ext}`);
           fd.append('picture', file);
       });
-    console.log(fd.values());
     addShow(fd);
   }
 

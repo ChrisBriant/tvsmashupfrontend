@@ -13,7 +13,6 @@ const uiControlReducer = (state,action) => {
       return {...state,catList:[...state.catList,action.payload]};
     case 'removeFromCatList':
       let newCatList = state.catList.filter((cat) => (cat !== action.payload));
-      console.log('REMOVING', action.payload, newCatList);
       return {...state,catList:newCatList};
     case 'resetCatList':
       return {...state,catList:[]};
@@ -45,5 +44,4 @@ export const {Provider, Context} = createDataContext (
   uiControlReducer,
   { setFocusedVsInput, addToCatList, removeFromCatList, resetCatList },
   {...defaultState}
-  //{smashups: [], shows: [], show: {}, BASEURL: 'http://localhost:8000' }
 );

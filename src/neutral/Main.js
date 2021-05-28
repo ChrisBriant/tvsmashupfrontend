@@ -1,12 +1,10 @@
 import {useState, useContext, useEffect} from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import { Route, BrowserRouter } from 'react-router-dom';
-import SmashupList from './SmashupList';
 import AddShow from '../authflow/AddShow';
 import AddSmashUp from '../authflow/AddSmashUp';
 import ViewSmashUp from './ViewSmashup';
@@ -19,27 +17,34 @@ import Home from '../unauthflow/Home';
 import PasswordReset from '../unauthflow/PasswordReset';
 import ForgotPassword from '../unauthflow/ForgotPassword';
 import Spacer from '../components/Spacer';
+import CookiesModal from '../components/CookiesModal';
 import {Context} from '../context/AuthContext';
+import {checkCookiePolicy} from '../helpers/cookiestorage';
+
 
 const Main = () => {
     const {isAuthed,signout, state:{authed,isAdmin}} = useContext(Context);
     const [search,setSearch] = useState('');
-    //const [authed,setAuthed] = useState(false);
+    const [cookieAccept,setCookieAccept] = useState(false);
 
     const logOut = (e) => {
       e.preventDefault();
       signout();
-      console.log('Am I authed',authed);
     }
 
     useEffect(() => {
       isAuthed();
-      console.log('Am I an admin?',isAdmin);
+      setCookieAccept(checkCookiePolicy());
     },[]);
 
 
     return (
       <>
+        {
+          cookieAccept
+          ? null
+          : <CookiesModal show={true} />
+        }
         <div className="main">
           <BrowserRouter>
             <Navbar expand="lg" className="navbar-custom">
@@ -127,7 +132,7 @@ const Main = () => {
             </Route>
           </BrowserRouter>
         </div>
-        
+
         <Spacer height="1rem" />
 
         <footer>

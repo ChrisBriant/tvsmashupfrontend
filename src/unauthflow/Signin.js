@@ -11,8 +11,6 @@ const Signin = (props) => {
   const [signInSuccess,setSignInSuccess] = useState(false);
   const {signin, state:{errorMessage}} = useContext(Context);
 
-  console.log('SIGN IN');
-
   const handleChangePass = (e) => {
     setPass(e.target.value);
   }

@@ -6,21 +6,12 @@ const Canvas = props => {
 
   const canvasRef = useRef(null);
 
-  const changeColor = () => {
-    const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
-    context.fillStyle = 'blue';
-    context.fillRect(0, 0, props.width, props.height);
-  }
-
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
     //Our first draw
     context.fillStyle = 'white';
     context.fillRect(0, 0, props.width, props.height);
-
-    console.log(context);
 
     //Define path to cut diagonally
     let topRght = [props.width, 0];
@@ -38,16 +29,8 @@ const Canvas = props => {
             let vsImage = new Image();
             vsImage.src = vs;
 
-            // context.beginPath();
-            // context.moveTo(...topRght);
-            // context.lineTo(...botLeft);
-            // context.lineTo(...botRght);
-            // context.lineTo(...topRght);
-            // context.closePath();
-            // context.clip();
             context.drawImage(image2,props.width/2,props.height/2,props.width/2,props.height/2);
             vsImage.onload = function() {
-              console.log('Here is the vs image',vsImage);
               context.globalAlpha = 1;
               context.drawImage(vsImage,props.width/6,props.height/6,props.width/1.5,props.height/1.5);
             }

@@ -7,7 +7,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import {Context} from '../context/UIControlContext';
-import SearchMenu from './SearchMenu';
 
 
 const CategoryInput = () => {
@@ -20,7 +19,6 @@ const CategoryInput = () => {
   }
 
   const addCategory = () => {
-    console.log('Adding');
     addToCatList(category);
   }
 

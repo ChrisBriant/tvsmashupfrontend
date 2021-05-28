@@ -20,10 +20,7 @@ const AddSmashup = (props) => {
   const [newCreated,setNewCreated] = useState(true);
   const [success,setSuccess] = useState(false);
 
-  console.log('CAT LIST',catList);
-
   const submitSmashup = async () => {
-    console.log(showVs);
     let payload = {
         show1: showVs.show1.id,
         show2: showVs.show2.id,
@@ -31,15 +28,17 @@ const AddSmashup = (props) => {
     }
     if (isValidSmashUp(payload)) {
       await createSmashup(payload).then(success => {
-        console.log('PROMISE', success);
         if(success.created) {
-          console.log('creation success', success);
           setNewId(success.id);
           setNewCreated(true);
           setSuccess(success.created);
         }
       });
     }
+  }
+
+  const submitSuccessAction = () => {
+    props.history.push(`/viewsmashup/${props.smashupId}`);
   }
 
   const goToSmashup = () => {
@@ -51,9 +50,11 @@ const AddSmashup = (props) => {
       {
         success
         ? <MessageModal
+          smashupId={newId}
           show={success}
           title="Success"
           message="Smashup has successfully been added."
+          okAction={submitSuccessAction}
         />
         : null
       }

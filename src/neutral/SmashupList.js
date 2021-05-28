@@ -10,26 +10,18 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-//<Canvas width="300" height="200" />
-
 
 const SmashupList = (props) => {
   const {getSmashups,resetSmashups, state: {smashups,selectedSmashup,BASEURL}} = useContext(Context);
   const {state:{authed}} = useContext(AuthContext);
-
 
   useEffect( () => {
     resetSmashups();
     getSmashups();
   },[]);
 
-  console.log('Here are the smashups',smashups);
-  console.log('Selected smashup', selectedSmashup);
-  console.log('AM I AUTHED', authed);
-
   const viewSmashUp = (e,id) => {
     e.preventDefault();
-    console.log('Smashup ID', id);
     props.history.push(`/viewsmashup/${id}`);
   }
 

@@ -31,7 +31,6 @@ const PasswordReset = () => {
                         Please choose a password which is eight characters long, has
                          at least one special character, one number and one upper case letter.`);
     }
-    console.log("Password Valid", valid);
     if(valid) {
       let payload = {
         hash,

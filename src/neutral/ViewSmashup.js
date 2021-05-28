@@ -9,7 +9,6 @@ import Col from 'react-bootstrap/Col';
 
 import {Context} from '../context/SmashUpContext';
 import {Context as AuthContext} from '../context/AuthContext';
-import {Context as UIContext} from '../context/UIControlContext';
 import Rating from '../components/Rating';
 import EditCategories from '../components/EditCategories';
 import Spacer from '../components/Spacer';
@@ -24,10 +23,8 @@ const ViewSmashUp = () => {
   const [addMode, setAddMode] = useState(false);
   const [selectedCategory,setSelectedCategory] = useState({})
   const [showRatingModal, setShowRatingModal] = useState(false);
-  console.log('Selected smashup', selectedSmashup);
   const { id } = useParams();
 
-  console.log('Here is the id',id);
 
   useEffect( async () => {
     resetSmashup();
@@ -46,12 +43,6 @@ const ViewSmashUp = () => {
   const hideRatingBox = () => {
     setShowRatingModal(false);
   }
-
-  // if(selectedSmashup.creator.id === userId) {
-  //   console.log('I am me');
-  // }
-
-  console.log('authed',authed,userId, selectedSmashup);
 
   return (
     selectedSmashup
@@ -213,14 +204,3 @@ const ViewSmashUp = () => {
 }
 
 export default ViewSmashUp;
-
-
-// {
-//   selectedSmashup.categories.map( (cat) => (
-//     <Row key={cat.id}>
-//       <Col>
-//         <p>cat.Category</p>
-//       </Col>
-//     </Row>
-//   ))
-// }

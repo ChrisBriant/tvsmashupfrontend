@@ -22,16 +22,6 @@ const AutoComplete = props => {
     }
   }
 
-  const handleChangeFocus = () => {
-    console.log(document.activeElement.tagName);
-    // if (document.activeElement.tagName === "INPUT")  {
-    //   setActiveSearch(false);
-    // } else {
-    //   setActiveSearch(true);
-    // }
-  }
-
-
   return(
     <div>
       <InputGroup className="mb-3">
@@ -50,6 +40,5 @@ const AutoComplete = props => {
     </div>
   );
 }
-
 
 export default AutoComplete;

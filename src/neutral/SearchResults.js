@@ -16,23 +16,18 @@ const SearchResults = (props) => {
 
   useEffect( () => {
     search(searchStr);
-    console.log('Here');
   },[]);
 
   const viewSmashUp = (e,id) => {
     e.preventDefault();
-    console.log('Smashup ID', id);
     props.history.push(`/viewsmashup/${id}`);
   }
 
   const goToShow = (e,id) => {
     e.preventDefault();
-    //let show = searchResults.shows.filter((show) => (show.id == id));
-    //setCurrentShow(show[0]);
     props.history.push(`/viewshow/${id}`);
   }
 
-  console.log('Here is the searchstr',searchResults);
 
   return (
     <>

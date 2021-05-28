@@ -3,11 +3,8 @@ import {withRouter} from 'react-router';
 import {Context} from '../context/SmashUpContext';
 import {Context as AuthContext} from '../context/AuthContext';
 import Spacer from '../components/Spacer';
-
-
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-
 
 
 const ShowIndex = (props) => {

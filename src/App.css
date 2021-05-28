@@ -166,3 +166,9 @@ footer {
 .modal-80w {
   min-width:80%;
 }
+
+.cookie-content {
+  max-height: 60vh;
+  scroll-behavior: auto;
+  overflow:scroll;
+}

@@ -7,8 +7,6 @@ import {Context} from '../context/AuthContext';
 const Home = () => {
   const {state:{authed,isAdmin}} = useContext(Context);
 
-  console.log("HOME PAGE - ADMIN?", isAdmin);
-
   return (
     <>
       {

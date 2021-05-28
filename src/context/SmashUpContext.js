@@ -1,7 +1,6 @@
 import createDataContext from './createDataContext';
 import tvApi from '../api/tvsmashupapi';
 import {multipartConn, tvApi as apiWithToken} from '../api/connections';
-//import {navigate} from '../navigationRef';
 
 const defaultState = {
   smashups: [],
@@ -43,11 +42,6 @@ const smashUpReducer = (state,action) => {
         newShows[`show${action.payload.vsIndex}`] = {};
         errorMessage = 'Both shows must be different';
       }
-      // if(action.payload.vsIndex === 1) {
-      //   newShows.show1 = action.payload;
-      // } else {
-      //   newShows.show2 = action.payload;
-      // }
       return {...state,showVs:newShows,errorMessage:errorMessage};
     case 'clearShows':
       return {...state,shows:[]};
@@ -86,7 +80,6 @@ const smashUpReducer = (state,action) => {
 const getSmashups = (dispatch) => async () => {
   const response = await tvApi.get('/api/allsmashups/')
                     .then(res => {
-                      console.log("success",res.data);
                       dispatch({type:'setSmashups', payload:res.data});
                     });
 }
@@ -94,24 +87,19 @@ const getSmashups = (dispatch) => async () => {
 const searchShows = (dispatch) => async (searchStr) => {
   const response = await tvApi.get('/api/searchshows/?search='+searchStr)
                     .then(res => {
-                      console.log("success",res.data);
                       dispatch({type:'setShows', payload:res.data});
                     });
 }
 
 
 const createSmashup = (dispatch) => async (data) => {
-  console.log('Sending ',data);
   let success = {created:false,id:0};
   const response = await apiWithToken.post('/api/addsmashup/',data)
                     .then(res => {
-                      console.log("success",res.data);
                       dispatch({type:'setSmashup', payload:res.data});
                       success = {created:true,id:res.data.id};
                     }).catch(err => {
-                        console.log('I am err', err.response.status);
                         if(err.response.status === 400) {
-                          console.log(err.response);
                           dispatch({type:'sendError', payload:err.response.data.message});
                         } else if(err.response.status === 401) {
                           dispatch({type:'sendError', payload:'You are not authorised to perform this action'});
@@ -129,12 +117,9 @@ const getSmashup = (dispatch) => async (data,authed) => {
 
   const response = await tvApi.get(`/api/getsmashup/?id=${data}`)
                     .then(res => {
-                      console.log("success",res.data);
                       dispatch({type:'setSmashup', payload:res.data});
                     }).catch(err => {
-                        console.log('I am err');
                         if(err.response.status === 400) {
-                          console.log(err.response);
                           dispatch({type:'sendError', payload:err.response.data.message});
                         }
                     });
@@ -157,11 +142,8 @@ const clearShows = (dispatch) => async () => {
 const addShow = (dispatch) => async (formData) => {
   await multipartConn.post('/api/addshow/',formData)
           .then(res => {
-              console.log(res);
-              console.log(res.data);
               dispatch({type:'addShowSuccess', payload:{name: res.data.name, message: `You have successfully added the show ${res.data.name}.`}});
           }).catch(err => {
-              console.log('I am err', err.response.status);
               if(err.response.status === 401) {
                 dispatch({type:'sendError', payload:'You are not authorised to perform this action'});
               } else if(err.response.status == 400) {
@@ -187,13 +169,10 @@ const updateCategories = (dispatch) => async (smashUpId,existing,newcategories) 
   }
   await apiWithToken.post('/api/updatecategories/',data)
         .then(res => {
-          console.log("success",res.data);
           dispatch({type:'setSmashup', payload:res.data});
           dispatch({type:'setSuccessMessage',payload:'Successfully updated categories'});
         }).catch(err => {
-            console.log('I am err');
             if(err.response.status === 400) {
-              console.log(err.response);
               dispatch({type:'sendError', payload:err.response.data.message});
             }
         });
@@ -206,14 +185,10 @@ const addRating = (dispatch) => async (data,authed) => {
 
   await tvApi.post('/api/addrating/',data)
         .then(res => {
-          console.log("success",res.data);
           dispatch({type:'setCategory', payload:res.data});
           dispatch({type:'setSuccessMessage',payload:'Your rating has been added'});
         }).catch(err => {
-            console.log('I am err');
-            console.log('AM I AUTHED',authed);
             if(err.response.status === 400) {
-              console.log(err.response);
               dispatch({type:'sendError', payload:err.response.data.message});
             }
         });
@@ -223,7 +198,6 @@ const addRating = (dispatch) => async (data,authed) => {
 const search = (dispatch) => async (searchStr) => {
   const response = await tvApi.get('/api/search/?search='+searchStr)
                     .then(res => {
-                      console.log("success",res.data);
                       dispatch({type:'setSearchResults', payload:res.data});
                     });
 }
@@ -236,7 +210,6 @@ const setCurrentShow = (dispatch) => async (show) => {
 const searchByShowId = (dispatch) => async (id) => {
   const response = await tvApi.get('/api/showsbyid/?id='+id)
                     .then(res => {
-                      console.log("success",res.data);
                       dispatch({type:'setCurrentShow',payload:res.data});
                     });
 }
@@ -245,7 +218,6 @@ const searchByShowId = (dispatch) => async (id) => {
 const getShowIndicies = (dispatch) => async () => {
   const response = await tvApi.get('/api/showsindexed')
                     .then(res => {
-                      console.log("success",res.data);
                       dispatch({type:'setShowIndicies',payload:res.data});
                     });
 }
@@ -254,7 +226,6 @@ const getShowIndicies = (dispatch) => async () => {
 const getShowsByLetter = (dispatch) => async (letter) => {
   const response = await tvApi.get('/api/showsbyletter?letter='+letter)
                     .then(res => {
-                      console.log("success",res.data);
                       dispatch({type:'setShows',payload:res.data});
                     });
 }
@@ -268,5 +239,4 @@ export const {Provider, Context} = createDataContext (
     addRating, search, setCurrentShow, searchByShowId, getShowIndicies,
     getShowsByLetter},
   {...defaultState}
-  //{smashups: [], shows: [], show: {}, BASEURL: 'http://localhost:8000' }
 );
